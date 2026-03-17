@@ -5,7 +5,7 @@
 
 import type { CommentMap, FHIRBundle, HospitalId, ChatMessage } from '../types/fhir';
 
-const BASE = '/api';
+const BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '/api';
 
 // ---------------------------------------------------------------------------
 // Handoff Operations
@@ -159,7 +159,7 @@ export async function getChat(
   bundleId: string,
   hospitalId: HospitalId,
 ): Promise<ChatMessage[]> {
-  const res = await fetch(`/api/get-chat?bundleId=${encodeURIComponent(bundleId)}&hospitalId=${encodeURIComponent(hospitalId)}`)
+  const res = await fetch(`${BASE}/get-chat?bundleId=${encodeURIComponent(bundleId)}&hospitalId=${encodeURIComponent(hospitalId)}`)
   if (!res.ok) throw new Error(`getChat failed: ${res.status}`)
   const data = await res.json()
   return data.messages ?? []
@@ -177,7 +177,7 @@ export async function sendChat(
   authorRole: string,
   authorName: string,
 ): Promise<void> {
-  const res = await fetch('/api/send-chat', {
+  const res = await fetch(`${BASE}/send-chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -207,7 +207,7 @@ export async function getEcg(
   index = -1,
 ): Promise<string> {
   const res = await fetch(
-    `/api/get-ecg?bundleId=${encodeURIComponent(bundleId)}&hospitalId=${encodeURIComponent(hospitalId)}&index=${index}`,
+    `${BASE}/get-ecg?bundleId=${encodeURIComponent(bundleId)}&hospitalId=${encodeURIComponent(hospitalId)}&index=${index}`,
   )
   if (!res.ok) throw new Error(`getEcg failed: ${res.status}`)
   const blob = await res.blob()

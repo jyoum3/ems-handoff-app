@@ -6,7 +6,7 @@
 import type { FHIRBundle } from '../types/fhir';
 import type { ChatMessage } from '../types/fhir';
 
-const BASE = '/api';
+const BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '/api';
 
 // ---------------------------------------------------------------------------
 // Handoff Lifecycle
@@ -280,7 +280,7 @@ export async function deleteEcg(
   index: number,
 ): Promise<{ remainingCount: number }> {
   const res = await fetch(
-    `/api/delete-ecg?bundleId=${encodeURIComponent(bundleId)}&hospitalId=${encodeURIComponent(hospitalId)}&index=${index}`,
+    `${BASE}/delete-ecg?bundleId=${encodeURIComponent(bundleId)}&hospitalId=${encodeURIComponent(hospitalId)}&index=${index}`,
     { method: 'DELETE' },
   );
   if (!res.ok) {
