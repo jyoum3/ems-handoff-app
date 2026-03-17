@@ -1,0 +1,71 @@
+{
+  "resourceType": "Bundle",
+  "id": "EMS-TEST-PRESBY-001",
+  "hospitalId": "HUP-PRESBY",
+  "timestamp": "2026-03-07T21:30:00Z",
+  "handoffStatus": "inbound",
+  "medicUnit": 8,
+  "medicName": "Kowalski, Dan",
+  "medicPhone": "215-555-0108",
+  "fromOrigin": {
+    "source": "Scene",
+    "address": "3400 Spruce St, Philadelphia, PA 19104"
+  },
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "name": [{ "family": "Vasquez", "given": ["Miguel"] }],
+        "gender": "male",
+        "birthDate": "1958-03-21",
+        "medications": ["Warfarin 5mg", "Digoxin 0.125mg", "Furosemide 40mg", "Potassium Chloride 20mEq"],
+        "extension": [
+          { "url": "known-history", "valueString": "A-Fib, CHF (EF 30%), prior stroke (2022), on anticoagulation" },
+          { "url": "allergies", "valueString": "Iodine contrast — anaphylaxis" },
+          { "url": "isolation", "valueString": "None" }
+        ],
+        "contact": [
+          {
+            "name": { "text": "Vasquez, Carmen" },
+            "relationship": [{ "text": "Daughter" }],
+            "telecom": [{ "system": "phone", "value": "267-555-0330" }]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Encounter",
+        "status": "in-progress",
+        "priority": { "text": "ESI-2 (EMERGENT)" },
+        "reasonCode": [{ "text": "Acute respiratory distress, pulmonary edema, known CHF" }],
+        "period": { "end": "2026-03-07T22:00:00Z" },
+        "resourceRequirements": ["CPAP/BiPAP Ready", "Cardiology Consult", "Foley Catheter"],
+        "interventions": ["CPAP 10cm H2O", "IV Access x2", "Furosemide 40mg IV push", "12-Lead EKG", "Nitroglycerin SL x2"],
+        "extension": [
+          { "url": "events", "valueString": "Patient found seated upright in tripod position by daughter. Markedly dyspneic with audible crackles bilaterally. 3+ pitting edema bilateral lower extremities. SpO2 82% on room air at scene. Improved to 90% with CPAP." },
+          { "url": "lkw", "valueString": "2026-03-07T18:00:00Z" }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "code": { "text": "Vital Signs" },
+        "component": [
+          { "code": { "text": "HR" }, "valueQuantity": { "value": 128, "unit": "bpm" } },
+          { "code": { "text": "BP" }, "valueString": "174/96 mmHg" },
+          { "code": { "text": "RR" }, "valueQuantity": { "value": 30, "unit": "/min" } },
+          { "code": { "text": "SpO2" }, "valueQuantity": { "value": 90, "unit": "%" } },
+          { "code": { "text": "Temp" }, "valueQuantity": { "value": 99.1, "unit": "°F" } },
+          { "code": { "text": "GCS" }, "valueQuantity": { "value": 14, "unit": "" } },
+          { "code": { "text": "Sugar" }, "valueQuantity": { "value": 142, "unit": "mg/dL" } }
+        ],
+        "note": [
+          { "text": "Acute CHF exacerbation with pulmonary edema. A-Fib with RVR on 12-lead. Patient on chronic Warfarin — INR unknown. Bilateral crackles to apices, SpO2 improving on CPAP. Lasix given with moderate response. Daughter reports 10 lb weight gain over 3 days. Contrast allergy documented — alert Radiology." }
+        ]
+      }
+    }
+  ]
+}

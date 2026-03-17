@@ -1,0 +1,118 @@
+# =============================================================================
+# EMS Handoff Dashboard — .gitignore
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# SECRETS & LOCAL CONFIGURATION — Never commit these
+# -----------------------------------------------------------------------------
+# Azure Functions local configuration — contains Service Principal credentials
+# (clientId, clientSecret, tenantId). Use Azure App Settings in production.
+local.settings.json
+appsettings.json
+
+# Generic environment variable files
+.env
+.env.*
+*.env
+secrets.json
+
+# Certificate and key files
+*.pem
+*.key
+*.pfx
+*.p12
+
+# -----------------------------------------------------------------------------
+# PYTHON
+# -----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Distribution / packaging
+build/
+dist/
+wheels/
+*.egg-info/
+*.egg
+.eggs/
+
+# Virtual environments — project uses .venv (managed by uv)
+.venv/
+venv/
+env/
+ENV/
+
+# Azure Functions local Python package install target
+.python_packages/
+
+# Test artifacts
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
+*.test-results/
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+.pyright/
+
+# -----------------------------------------------------------------------------
+# NODE / FRONTEND
+# -----------------------------------------------------------------------------
+node_modules/
+
+# Vite / TypeScript build output
+dist/
+.cache/
+coverage/
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# -----------------------------------------------------------------------------
+# AZURE FUNCTIONS BUILD ARTIFACTS
+# -----------------------------------------------------------------------------
+bin/
+obj/
+
+# Azure Functions Core Tools local storage emulator
+.azurite/
+
+
+# -----------------------------------------------------------------------------
+# EDITOR & OS
+# -----------------------------------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# VS Code — share extensions.json and launch.json if desired, but not settings
+.vscode/settings.json
+.vscode/*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# Vim / Emacs swap files
+*.swp
+*.swo
+*~
+\#*\#
+
+# -----------------------------------------------------------------------------
+# LOGS
+# -----------------------------------------------------------------------------
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

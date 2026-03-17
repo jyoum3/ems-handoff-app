@@ -1,0 +1,219 @@
+/* ShiftCheckIn.module.css — EMS Shift Start Verification Overlay */
+
+/* ── Overlay: Full-screen blocking backdrop ─────────────────────── */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.97);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+/* ── Card ────────────────────────────────────────────────────────── */
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-top: 3px solid #F97316;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(249, 115, 22, 0.08);
+  border-bottom: 1px solid #334155;
+}
+
+.icon {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.title {
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #F97316;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: 0.8125rem;
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+/* ── Body: Form Fields ───────────────────────────────────────────── */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+  padding: 1.5rem;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  letter-spacing: 0.025em;
+}
+
+.required {
+  color: #F97316;
+  margin-left: 0.125rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.6875rem 0.875rem;
+  background: #0f172a;
+  border: 1.5px solid #334155;
+  border-radius: var(--radius-md);
+  color: #f8fafc;
+  font-size: 1rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.input::placeholder {
+  color: #475569;
+}
+
+.input:focus {
+  border-color: #F97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+}
+
+.inputError {
+  border-color: #ef4444;
+}
+
+.inputError:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.errorText {
+  font-size: 0.75rem;
+  color: #ef4444;
+  font-weight: 500;
+  margin: 0;
+}
+
+.errorBanner {
+  padding: 0.625rem 0.875rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-md);
+  color: #fca5a5;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid #334155;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.btnStart {
+  width: 100%;
+  padding: 0.875rem;
+  background: #F97316;
+  border: none;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.025em;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btnStart:hover:not(:disabled) {
+  background: #ea6d0a;
+}
+
+.btnStart:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.btnStart:disabled {
+  background: #475569;
+  cursor: not-allowed;
+  color: #94a3b8;
+}
+
+.disclaimer {
+  font-size: 0.75rem;
+  color: #475569;
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ── Unit Type ALS / BLS Toggle (Sprint 2.5) ──────────────────────── */
+
+.unitTypeRow {
+  display: flex;
+  gap: 12px;
+}
+
+.unitTypeBtn {
+  flex: 1;
+  padding: 12px 0;
+  background: #0f172a;
+  border: 2px solid #475569;
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.1em;
+}
+
+.unitTypeBtn:hover {
+  border-color: #F97316;
+  color: #F97316;
+}
+
+.unitTypeBtnActive {
+  background: #F97316 !important;
+  border-color: #F97316 !important;
+  color: #fff !important;
+}

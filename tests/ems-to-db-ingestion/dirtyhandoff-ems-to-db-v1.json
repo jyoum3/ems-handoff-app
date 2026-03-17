@@ -1,0 +1,23 @@
+{
+    "resourceType": "Bundle",
+    "id": "EMS-HANDOFF-DIRTY-TEST-V1",
+    "timestamp": "2026-03-03T21:45:00Z",
+    "entry": [
+        {
+            "resource": {
+                "resourceType": "Patient",
+                "name": [{ "family": "Smith", "given": ["Jane"] }],
+                "birthDate": "Unknown",
+                "gender": "female"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Observation",
+                "component": [
+                    { "code": { "text": "HR" }, "valueQuantity": { "value": "CRITICAL" } }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,71 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+/* ── Tab Bar ───────────────────────────────────────────────────────── */
+
+.tabBar {
+  display: flex;
+  gap: 0;
+  padding: 0 var(--space-5);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  margin-bottom: -1px;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+}
+
+.tabActive {
+  color: var(--text-primary);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+.tabBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 9px;
+  line-height: 1;
+}
+
+.tabBadgeGray {
+  background: var(--border-light);
+  color: var(--text-secondary);
+}
+
+/* ── Content Area ──────────────────────────────────────────────────── */
+
+.content {
+  flex: 1;
+  overflow: auto;
+  padding: var(--space-4) var(--space-5);
+}

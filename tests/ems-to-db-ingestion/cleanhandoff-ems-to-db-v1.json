@@ -1,0 +1,55 @@
+{
+    "resourceType": "Bundle",
+    "hospitalId": "HUP-PAV",
+    "id": "EMS-HANDOFF-CLEAN-TEST-V1",
+    "timestamp": "2026-03-03T23:05:00Z",
+    "entry": [
+        {
+            "resource": {
+                "resourceType": "Patient",
+                "name": [{ "family": "Doe", "given": ["John"] }],
+                "gender": "male",
+                "birthDate": "1980-01-01",
+                "extension": [
+                    { "url": "age", "valueString": "46" },
+                    { "url": "known-history", "valueString": "Type 2 Diabetes, Hypertension" },
+                    { "url": "isolation", "valueString": "None" },
+                    { "url": "allergies", "valueString": "Sulfa Drugs" }
+                ],
+                "contact": [{
+                    "name": { "text": "Jane Doe" },
+                    "telecom": [{ "system": "phone", "value": "215-555-0199" }],
+                    "relationship": [{ "text": "Family" }]
+                }]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Encounter",
+                "status": "in-progress",
+                "priority": { "text": "ESI-2" },
+                "reasonCode": [{ "text": "Chest Pain / Possible ACS" }],
+                "period": { "end": "2026-03-03T23:25:00Z" },
+                "extension": [
+                    { "url": "scene-safety", "valueString": "Scene Secure" },
+                    { "url": "lkw", "valueDateTime": "2026-03-03T22:30:00Z" }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Observation",
+                "status": "final",
+                "code": { "text": "Vital Signs" },
+                "component": [
+                    { "code": { "text": "HR" }, "valueQuantity": { "value": 92, "unit": "bpm" } },
+                    { "code": { "text": "BP" }, "valueString": "158/94", "unit": "mmHg" },
+                    { "code": { "text": "RR" }, "valueQuantity": { "value": 20, "unit": "breaths/min" } },
+                    { "code": { "text": "SpO2" }, "valueQuantity": { "value": 96, "unit": "%" } },
+                    { "code": { "text": "GCS" }, "valueQuantity": { "value": 15, "unit": "score" } }
+                ],
+                "note": [{ "text": "Patient stable; 12-lead shows sinus rhythm with no ST elevation. | O2: 2L NC | Meds: Aspirin 324mg given." }]
+            }
+        }
+    ]
+}

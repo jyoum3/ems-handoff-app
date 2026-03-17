@@ -1,0 +1,8 @@
+/* App.module.css — EMS Ingestion PWA root layout */
+
+.app {
+  min-height: 100vh;
+  background: var(--bg-base);
+  display: flex;
+  flex-direction: column;
+}

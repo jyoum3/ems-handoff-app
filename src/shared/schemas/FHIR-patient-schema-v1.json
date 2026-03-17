@@ -1,0 +1,143 @@
+{
+    "_schemaVersion": "2.0",
+    "_comment": "FHIR-patient-schema-v2 — EMS Handoff Dashboard canonical schema. All fields optional unless noted.",
+
+    "resourceType": "Bundle",
+    "hospitalId": "{{HUP-PAV | HUP-PRESBY | HUP-CEDAR}}",
+    "id": "{{EMS-{unit}-{timestamp}}}",
+    "timestamp": "{{ISO8601_UTC}}",
+    "handoffStatus": "inbound",
+
+    "medicUnit": "{{unitNumber_int}}",
+    "medicUnitType": "{{ALS | BLS}}",
+    "medicName": "{{medicFullName}}",
+    "medicPhone": "{{XXX-XXX-XXXX}}",
+
+    "ecgUploaded": false,
+    "ecgBlobUrl": null,
+
+    "editCount": 0,
+    "isEdited": false,
+    "lastEditedAt": null,
+
+    "fromOrigin": {
+        "source": "{{Scene | SNF | Residence | MVA | Other}}",
+        "address": "{{streetAddress}}"
+    },
+
+    "entry": [
+        {
+            "resource": {
+                "resourceType": "Patient",
+                "name": [{ "family": "{{lastName_or_Unknown}}", "given": ["{{firstName_or_Patient}}"] }],
+                "gender": "{{male | female | unknown | other}}",
+                "birthDate": "{{YYYY-MM-DD_or_Unknown}}",
+                "codeStatus": "{{Full Code | DNR | DNI | DNR/DNI}}",
+                "alertBadges": ["{{STEMI}}", "{{Stroke Alert}}", "{{Trauma Activation}}"],
+                "medications": ["{{medication_1}}", "{{medication_2}}"],
+                "extension": [
+                    { "url": "age", "valueString": "{{age_int_or_Unknown}}" },
+                    { "url": "known-history", "valueString": "{{pastMedicalHistory}}" },
+                    { "url": "isolation", "valueString": "{{isolationStatus}}" },
+                    { "url": "allergies", "valueString": "{{allergyList}}" }
+                ],
+                "contact": [{
+                    "name": { "family": "{{ecLastName}}", "given": "{{ecFirstName}}" },
+                    "telecom": [{ "system": "phone", "value": "{{ecPhone}}" }],
+                    "relationship": [{ "text": "{{ecRelationship}}" }]
+                }]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Encounter",
+                "status": "in-progress",
+                "priority": { "text": "{{ESI-1 (CRITICAL) | ESI-2 | ESI-3 | ESI-4 | ESI-5 (MINOR)}}" },
+                "reasonCode": [{ "text": "{{chiefComplaint}}" }],
+                "period": { "end": "{{arrivalETA_ISO8601}}" },
+                "resourceRequirements": ["{{requirement_1}}", "{{requirement_2}}"],
+                "interventions": ["{{intervention_1}}", "{{intervention_2}}"],
+                "sceneNotes": ["{{contextualNote_1}}", "{{contextualNote_2}}"],
+                "extension": [
+                    { "url": "lkw", "valueDateTime": "{{lastKnownWell_ISO8601}}" },
+                    { "url": "onset-time", "valueDateTime": "{{onsetOrInjuryTime_ISO8601}}" },
+                    { "url": "ems-contact-time", "valueDateTime": "{{firstMedicalContactTime_ISO8601}}" },
+                    { "url": "events", "valueString": "{{eventNarrative}}" }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Observation",
+                "observationType": "initial",
+                "status": "final",
+                "code": { "text": "Vital Signs - Initial" },
+                "height": "{{estimatedHeightInches}}",
+                "weight": "{{estimatedWeightLbs}}",
+                "component": [
+                    {
+                        "code": { "text": "HR" },
+                        "valueQuantity": { "value": "{{hr_bpm}}", "unit": "bpm", "system": "http://unitsofmeasure.org", "code": "/min" }
+                    },
+                    {
+                        "code": { "text": "BP" },
+                        "valueString": "{{bp_systolic/diastolic}}",
+                        "unit": "mmHg",
+                        "location": "{{Right Arm | Left Arm | Right Forearm | Left Forearm | Right Calf | Left Calf}}",
+                        "orientation": "{{Lying | Sitting | Standing}}"
+                    },
+                    {
+                        "code": { "text": "RR" },
+                        "valueQuantity": { "value": "{{rr_breaths_per_min}}", "unit": "breaths/min", "system": "http://unitsofmeasure.org", "code": "/min" }
+                    },
+                    {
+                        "code": { "text": "SpO2" },
+                        "valueQuantity": { "value": "{{spo2_percent}}", "unit": "%", "system": "http://unitsofmeasure.org", "code": "%" },
+                        "device": "{{Room Air | Nasal Cannula | Non-Rebreather | Bag-Valve-Mask | Ventilator}}",
+                        "flowRate": "{{o2_flow_rate_lpm_0_to_16}}"
+                    },
+                    {
+                        "code": { "text": "Temp" },
+                        "valueQuantity": { "value": "{{temp_fahrenheit}}", "unit": "°F", "system": "http://unitsofmeasure.org", "code": "[degF]" },
+                        "location": "{{Oral | Axillary | Rectal | Tympanic | Temporal}}"
+                    },
+                    {
+                        "code": { "text": "Sugar" },
+                        "valueQuantity": { "value": "{{bloodGlucose_mgdL}}", "unit": "mg/dL" }
+                    }
+                ],
+                "note": [{ "text": "{{triageNote_with_abnormalVitals}}" }]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Observation",
+                "observationType": "current",
+                "status": "final",
+                "code": { "text": "Vital Signs - Current" },
+                "height": null,
+                "weight": null,
+                "component": [
+                    "_comment: same component structure as initial — all fields optional for partial updates"
+                ],
+                "note": [{ "text": "{{updatedTriageNote}}" }]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Assessment",
+                "mentalStatus": "{{Alert | Voice | Pain | Unresponsive}}",
+                "gcs": "{{3_to_15_int}}",
+                "orientation": ["{{Person}}", "{{Place}}", "{{Time}}", "{{Situation}}"],
+                "pupils": "{{pupilNarrative}}",
+                "motorLeft": "{{Equal | Weak | Absent}}",
+                "motorRight": "{{Equal | Weak | Absent}}",
+                "speech": "{{Clear | Slurred | Aphasic | Non-verbal}}",
+                "airway": "{{Patent | Obstructed | Managed}}",
+                "lungSounds": ["{{Clear}}", "{{Wheeze R}}", "{{Crackles bilateral}}"],
+                "skin": ["{{Warm}}", "{{Dry}}", "{{Pale}}", "{{Diaphoretic}}"],
+                "pertinentNegatives": ["{{No chest pain}}", "{{No LOC}}", "{{No focal deficits}}"]
+            }
+        }
+    ]
+}

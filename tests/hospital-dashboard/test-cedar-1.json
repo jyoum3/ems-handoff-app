@@ -1,0 +1,71 @@
+{
+  "resourceType": "Bundle",
+  "id": "EMS-TEST-CEDAR-001",
+  "hospitalId": "HUP-CEDAR",
+  "timestamp": "2026-03-08T02:05:00Z",
+  "handoffStatus": "inbound",
+  "medicUnit": 55,
+  "medicName": "Jackson, Devon",
+  "medicPhone": "215-555-0155",
+  "fromOrigin": {
+    "source": "Scene",
+    "address": "2100 Chestnut St, Philadelphia, PA 19103"
+  },
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "name": [{ "family": "Patel", "given": ["Ravi"] }],
+        "gender": "male",
+        "birthDate": "1985-12-30",
+        "medications": ["Albuterol inhaler PRN", "Fluticasone 110mcg BID"],
+        "extension": [
+          { "url": "known-history", "valueString": "Moderate persistent asthma, prior intubation 2019" },
+          { "url": "allergies", "valueString": "NSAIDs — bronchospasm" },
+          { "url": "isolation", "valueString": "None" }
+        ],
+        "contact": [
+          {
+            "name": { "text": "Patel, Meera" },
+            "relationship": [{ "text": "Wife" }],
+            "telecom": [{ "system": "phone", "value": "215-555-0310" }]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Encounter",
+        "status": "in-progress",
+        "priority": { "text": "ESI-2 (EMERGENT)" },
+        "reasonCode": [{ "text": "Severe asthma exacerbation, accessory muscle use, diffuse wheezing" }],
+        "period": { "end": "2026-03-08T03:00:00Z" },
+        "resourceRequirements": ["RT Standby", "Nebulizer Setup", "IV Access"],
+        "interventions": ["Albuterol Neb x2", "Ipratropium Neb x1", "Magnesium Sulfate 2g IV", "IV Access x1", "O2 NRB 15L/min"],
+        "extension": [
+          { "url": "events", "valueString": "Patient found seated upright in bathroom, unable to complete sentences. Diffuse expiratory wheezing bilaterally. Used personal inhaler x4 prior to EMS arrival without relief. No fever. Denies recent NSAID use. PEFR not measured. Prior intubation history documented — may require aggressive management." },
+          { "url": "lkw", "valueString": "2026-03-08T00:30:00Z" }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "code": { "text": "Vital Signs" },
+        "component": [
+          { "code": { "text": "HR" }, "valueQuantity": { "value": 134, "unit": "bpm" } },
+          { "code": { "text": "BP" }, "valueString": "138/88 mmHg" },
+          { "code": { "text": "RR" }, "valueQuantity": { "value": 28, "unit": "/min" } },
+          { "code": { "text": "SpO2" }, "valueQuantity": { "value": 86, "unit": "%" } },
+          { "code": { "text": "Temp" }, "valueQuantity": { "value": 98.8, "unit": "°F" } },
+          { "code": { "text": "GCS" }, "valueQuantity": { "value": 15, "unit": "" } },
+          { "code": { "text": "Sugar" }, "valueQuantity": { "value": 118, "unit": "mg/dL" } }
+        ],
+        "note": [
+          { "text": "40M with severe asthma exacerbation. SpO2 86% on room air at scene, improved to 91% on NRB after 2 rounds albuterol + ipratropium. Mag sulfate 2g given over 15min in transit. Accessory muscle use, nasal flaring, tripod positioning. Prior intubation history — notify RT and senior MD on arrival. NSAID allergy documented." }
+        ]
+      }
+    }
+  ]
+}

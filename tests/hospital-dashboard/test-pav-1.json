@@ -1,0 +1,72 @@
+{
+  "resourceType": "Bundle",
+  "id": "EMS-TEST-PAV-001",
+  "hospitalId": "HUP-PAV",
+  "timestamp": "2026-03-07T20:00:00Z",
+  "handoffStatus": "inbound",
+  "medicUnit": 42,
+  "medicName": "Rodriguez, Marcus",
+  "medicPhone": "215-555-0142",
+  "fromOrigin": {
+    "source": "Scene - Motor Vehicle Accident",
+    "address": "I-76 Westbound near Exit 340, Philadelphia, PA"
+  },
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "name": [{ "family": "Thornton", "given": ["James", "R."] }],
+        "gender": "male",
+        "birthDate": "1974-11-03",
+        "medications": ["Metoprolol 25mg", "Aspirin 81mg", "Lisinopril 10mg"],
+        "extension": [
+          { "url": "known-history", "valueString": "HTN, Type 2 DM, prior CABG (2019)" },
+          { "url": "allergies", "valueString": "PCN — Hives" },
+          { "url": "isolation", "valueString": "None" }
+        ],
+        "contact": [
+          {
+            "name": { "text": "Thornton, Patricia" },
+            "relationship": [{ "text": "Spouse" }],
+            "telecom": [{ "system": "phone", "value": "215-555-0188" }]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Encounter",
+        "status": "in-progress",
+        "priority": { "text": "ESI-1 (CRITICAL)" },
+        "reasonCode": [{ "text": "Chest pain, diaphoresis, ST-elevation anterolateral" }],
+        "period": { "end": "2026-03-07T20:45:00Z" },
+        "resourceRequirements": ["Cath Lab - STAT", "Cardiology Consult", "LVAD Specialist"],
+        "interventions": ["12-Lead EKG", "IV Access x2", "Aspirin 325mg PO", "Nitroglycerin SL x1"],
+        "extension": [
+          { "url": "scene-safety", "valueString": "Scene clear." },
+          { "url": "events", "valueString": "Patient found clutching chest in driver seat, vehicle had minor front-end damage. Bystander AED applied before EMS arrival — no shock advised. Patient awake and alert on scene arrival. STEMI alert activated." },
+          { "url": "lkw", "valueString": "2026-03-07T18:30:00Z" }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "code": { "text": "Vital Signs" },
+        "component": [
+          { "code": { "text": "HR" }, "valueQuantity": { "value": 112, "unit": "bpm" } },
+          { "code": { "text": "BP" }, "valueString": "188/108 mmHg" },
+          { "code": { "text": "RR" }, "valueQuantity": { "value": 22, "unit": "/min" } },
+          { "code": { "text": "SpO2" }, "valueQuantity": { "value": 94, "unit": "%" } },
+          { "code": { "text": "Temp" }, "valueQuantity": { "value": 98.6, "unit": "°F" } },
+          { "code": { "text": "GCS" }, "valueQuantity": { "value": 15, "unit": "" } },
+          { "code": { "text": "Sugar" }, "valueQuantity": { "value": 185, "unit": "mg/dL" } }
+        ],
+        "note": [
+          { "text": "STEMI alert. Patient c/o 8/10 crushing chest pain radiating to jaw and left arm x 2hrs. Diaphoretic, pale, anxious. 12-lead shows 3mm ST elevation V1-V4, V5. NTG given with partial relief. O2 via NRB 15L/min. Two 18ga PIVs. ASA 324mg chewed. Aspirin and NTG given. Family at scene." }
+        ]
+      }
+    }
+  ]
+}

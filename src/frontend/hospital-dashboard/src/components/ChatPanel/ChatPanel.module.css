@@ -1,0 +1,166 @@
+/* ChatPanel.module.css — Hospital-SWA Inbound Update Hub */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;           /* allow flex child to shrink */
+  background: #0f172a;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.header {
+  flex-shrink: 0;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid #1e293b;
+  border-left: 3px solid #F97316;
+  background: #0f172a;
+}
+
+.headerTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* ── Thread ──────────────────────────────────────────────────────────────── */
+.thread {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+}
+
+.loadingText,
+.emptyState {
+  font-size: 12px;
+  color: #475569;
+  text-align: center;
+  margin-top: 24px;
+  font-style: italic;
+}
+
+/* ── Message Bubbles ─────────────────────────────────────────────────────── */
+.bubble {
+  max-width: 90%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border-width: 0;
+  border-style: solid;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* HOSPITAL (Charge) messages — left-aligned, role color left border */
+.bubbleLeft {
+  align-self: flex-start;
+  border-left-width: 3px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* EMS messages — right-aligned, orange right border */
+.bubbleRight {
+  align-self: flex-end;
+  border-right-width: 3px;
+  background: rgba(249, 115, 22, 0.07);
+  text-align: right;
+}
+
+.bubbleHeader {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.bubbleTimestamp {
+  font-size: 10px;
+  color: #475569;
+  margin-bottom: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.bubbleText {
+  color: #e2e8f0;
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── Compose Footer ──────────────────────────────────────────────────────── */
+.footer {
+  flex-shrink: 0;
+  padding: 10px 14px 12px;
+  border-top: 1px solid #1e293b;
+  background: #0f172a;
+}
+
+.sendError {
+  font-size: 11px;
+  color: #f87171;
+  margin-bottom: 6px;
+}
+
+.composeArea {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.textarea {
+  flex: 1;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #f1f5f9;
+  font-size: 12px;
+  padding: 7px 10px;
+  resize: none;
+  outline: none;
+  line-height: 1.5;
+  font-family: inherit;
+}
+
+.textarea:focus {
+  border-color: #F97316;
+}
+
+.textarea:disabled {
+  opacity: 0.5;
+}
+
+.sendBtn {
+  padding: 7px 16px;
+  border-radius: 6px;
+  border: none;
+  background: #F97316;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.sendBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sendBtn:not(:disabled):hover {
+  opacity: 0.88;
+}
+
+.readOnlyNote {
+  font-size: 11px;
+  color: #475569;
+  text-align: center;
+  padding: 8px 0;
+  font-style: italic;
+}

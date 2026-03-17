@@ -1,0 +1,689 @@
+/* PatientForm.module.css — EMS Ingestion PWA: Form Styles
+ * =========================================================
+ * Phase 4 Sprint 2.5 — Full rewrite to support 7-section collapsible form
+ */
+
+/* ---------------------------------------------------------------------------
+ * Form Container
+ * --------------------------------------------------------------------------- */
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  max-width: 900px;
+  min-width: 900px;
+  margin: 0 auto;
+}
+
+/* ---------------------------------------------------------------------------
+ * Hospital Selector
+ * --------------------------------------------------------------------------- */
+.hospitalSelector {
+  background: #1e293b;
+  border: 2px solid #f97316;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.hospitalLabel {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #f97316;
+  margin-bottom: 8px;
+}
+
+.hospitalSelect {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #f8fafc !important;
+  background: #0f172a !important;
+  border-color: #f97316 !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * Collapsible Section Cards
+ * --------------------------------------------------------------------------- */
+.sectionCard {
+  background: #1e293b;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  overflow: hidden;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 16px;
+  background: #1e293b;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.sectionHeader:hover {
+  background: #263348;
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #94a3b8;
+}
+
+.sectionHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sectionBadge {
+  font-size: 11px;
+  background: #16a34a;
+  color: #fff;
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-weight: 600;
+}
+
+.sectionChevron {
+  color: #64748b;
+  font-size: 16px;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.sectionChevronOpen {
+  transform: rotate(180deg);
+}
+
+.sectionBody {
+  border-top: 1px solid #334155;
+}
+
+.sectionContent {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Sub-cards (within sections)
+ * --------------------------------------------------------------------------- */
+.subCard {
+  background: #0f172a;
+  border-left: 3px solid #f97316;
+  border-radius: 0 8px 8px 0;
+  padding: 14px;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.subCardTitle {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #f97316;
+  margin: 0 0 4px;
+}
+
+.subCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0;
+}
+
+.subCardHint {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+/* ---------------------------------------------------------------------------
+ * Form Fields — Base
+ * --------------------------------------------------------------------------- */
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+}
+
+.subLabel {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.fieldHint {
+  font-size: 11px;
+  color: #64748b;
+  margin: 2px 0 0;
+  font-style: italic;
+}
+
+.input {
+  width: 100%;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 9px 12px;
+  color: #f1f5f9;
+  font-size: 14px;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #f97316;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.15);
+}
+
+.input:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.inputError {
+  border-color: #ef4444 !important;
+}
+
+.inputNarrow {
+  max-width: 120px;
+}
+
+.select {
+  width: 100%;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 9px 12px;
+  color: #f1f5f9;
+  font-size: 14px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #f97316;
+}
+
+.textarea {
+  width: 100%;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 9px 12px;
+  color: #f1f5f9;
+  font-size: 14px;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #f97316;
+}
+
+/* ---------------------------------------------------------------------------
+ * Grid Layouts
+ * --------------------------------------------------------------------------- */
+.twoColGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.vitalsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.spanFull {
+  grid-column: 1 / -1;
+}
+
+.vitalsRow3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.vitalsRow2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Toggle Button Groups
+ * --------------------------------------------------------------------------- */
+.toggleGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.toggleBtn {
+  flex: 1;
+  min-width: 70px;
+  padding: 8px 12px;
+  background: #0f172a;
+  border: 1.5px solid #475569;
+  border-radius: 6px;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.toggleBtn:hover {
+  border-color: #f97316;
+  color: #f97316;
+}
+
+.toggleBtnActive {
+  background: #f97316 !important;
+  border-color: #f97316 !important;
+  color: #fff !important;
+}
+
+.toggleBtnFull {
+  flex: 1 1 80px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Chip Components
+ * --------------------------------------------------------------------------- */
+.chipInputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 8px 10px;
+  min-height: 44px;
+}
+
+.chipList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #1e3a5f;
+  color: #93c5fd;
+  border-radius: 20px;
+  padding: 4px 10px 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.chipRemove {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 10px;
+  padding: 0;
+  line-height: 1;
+  opacity: 0.6;
+}
+
+.chipRemove:hover {
+  opacity: 1;
+}
+
+.chipTextInput {
+  background: transparent;
+  border: none;
+  color: #f1f5f9;
+  font-size: 13px;
+  padding: 2px 0;
+  outline: none;
+  width: 100%;
+}
+
+.chipTextInput::placeholder {
+  color: #475569;
+}
+
+/* Multi-select chip group (predefined options, toggle style) */
+.chipGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.chipOption {
+  padding: 5px 11px;
+  background: #1e293b;
+  border: 1.5px solid #475569;
+  border-radius: 20px;
+  color: #94a3b8;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.chipOption:hover {
+  border-color: #f97316;
+  color: #f97316;
+}
+
+.chipOptionSelected {
+  background: #f97316 !important;
+  border-color: #f97316 !important;
+  color: #fff !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * Unknown Patient
+ * --------------------------------------------------------------------------- */
+.unknownPatientRow {
+  background: #1c1917;
+  border: 1.5px solid #92400e;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #f97316;
+}
+
+.checkboxText {
+  font-size: 14px;
+  color: #fde68a;
+}
+
+.checkboxHint {
+  color: #92400e;
+  font-size: 12px;
+}
+
+.fieldDisabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * SAMPLE Section Letters
+ * --------------------------------------------------------------------------- */
+.sampleLetter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: #f97316;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+/* ---------------------------------------------------------------------------
+ * AXO Label
+ * --------------------------------------------------------------------------- */
+.axoLabel {
+  font-size: 11px;
+  color: #4ade80;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Abnormal Vitals Tag
+ * --------------------------------------------------------------------------- */
+.abnormalTag {
+  color: #fbbf24;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Timeline — Input with embedded button
+ * --------------------------------------------------------------------------- */
+.inputWithButton {
+  display: flex;
+  gap: 8px;
+}
+
+.inputWithButton .input {
+  flex: 1;
+}
+
+.timestampBtn {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  background: #1e3a5f;
+  border: 1.5px solid #3b82f6;
+  border-radius: 6px;
+  color: #93c5fd;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.timestampBtn:hover {
+  background: #3b82f6;
+  color: #fff;
+}
+
+/* ---------------------------------------------------------------------------
+ * Vitals Section — Chevron for Current sub-card
+ * --------------------------------------------------------------------------- */
+.chevron {
+  font-size: 14px;
+  transition: transform 0.2s;
+  margin-left: auto;
+  color: #64748b;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ---------------------------------------------------------------------------
+ * ECG Upload
+ * --------------------------------------------------------------------------- */
+.ecgZone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px dashed #475569;
+  border-radius: 8px;
+  padding: 24px 16px;
+  cursor: pointer;
+  color: #64748b;
+  font-size: 14px;
+  transition: border-color 0.15s, color 0.15s;
+  text-align: center;
+  min-height: 80px;
+}
+
+.ecgZone:hover {
+  border-color: #f97316;
+  color: #f97316;
+}
+
+.ecgIcon {
+  font-size: 28px;
+}
+
+.ecgThumb {
+  max-height: 200px;
+  border-radius: 6px;
+  margin-top: 8px;
+  border: 1px solid #334155;
+  width: 100%;
+  object-fit: contain;
+}
+
+.ecgUnavailable {
+  color: #fbbf24;
+  font-size: 13px;
+}
+
+/* ---------------------------------------------------------------------------
+ * ShiftCheckIn Module (also used by ShiftCheckIn.module.css overrides)
+ * --------------------------------------------------------------------------- */
+.unitTypeRow {
+  display: flex;
+  gap: 12px;
+}
+
+.unitTypeBtn {
+  flex: 1;
+  padding: 12px 0;
+  background: #0f172a;
+  border: 2px solid #475569;
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.1em;
+}
+
+.unitTypeBtn:hover {
+  border-color: #f97316;
+  color: #f97316;
+}
+
+.unitTypeBtnActive {
+  background: #f97316 !important;
+  border-color: #f97316 !important;
+  color: #fff !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * Validation / Submit
+ * --------------------------------------------------------------------------- */
+.inlineError {
+  background: #3b0a0a;
+  border: 1px solid #ef4444;
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: #fca5a5;
+  font-size: 13px;
+}
+
+.submitError {
+  background: #1c1917;
+  border: 1px solid #f59e0b;
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: #fde68a;
+  font-size: 13px;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 16px;
+  background: #f97316;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  margin-top: 4px;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: #ea6c0a;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+ * Required asterisk
+ * --------------------------------------------------------------------------- */
+.required {
+  color: #ef4444;
+}
+
+@media (max-width: 600px) {
+  .twoColGrid,
+  .vitalsGrid,
+  .vitalsRow3,
+  .vitalsRow2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Date Input — white calendar icon to match datetime-local inputs in
+ * ChiefComplaintSection & DivertModal (Sprint 4)
+ * --------------------------------------------------------------------------- */
+.dateInput::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.85;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}

@@ -1,0 +1,99 @@
+/* HospitalArrivedNotification.module.css */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.90);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 40px 32px;
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon {
+  font-size: 48px;
+  line-height: 1;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.body {
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.6;
+  max-width: 400px;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+  margin-top: 8px;
+}
+
+.restoreBtn {
+  padding: 13px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #22c55e;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: opacity 0.15s;
+}
+
+.restoreBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.clearBtn {
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid #475569;
+  background: #1e293b;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.clearBtn:hover {
+  background: #0f172a;
+  color: #f1f5f9;
+}
+
+.error {
+  font-size: 12px;
+  color: #f87171;
+  font-weight: 600;
+}

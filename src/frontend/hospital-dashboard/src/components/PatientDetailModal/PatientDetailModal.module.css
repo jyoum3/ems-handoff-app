@@ -1,0 +1,792 @@
+/* ============================================================================
+   PatientDetailModal.module.css — Patient Detail Overlay Styles
+   ============================================================================
+
+   Sprint 3 — Complete restructure of the modal layout to support:
+   - New Header Bar: crew info (unit, name, phone) + ETA + status
+   - Section 2: Demographics
+   - Section 3: Clinical Narrative (ESI + CC + Triage Note + Resources)
+   - Section 4: Vital Grid (3-column card grid)
+   - Section 5: Contextual Data (origin + scene safety + contact)
+   - Section 6: Medical Background
+   - Smart-hide: sections only render when data is present
+
+   New classes vs Sprint 2:
+   - .headerMain / .crewInfo / .headerControls
+   - .unitBadge / .medicName / .medicPhone
+   - .etaDisplay / .etaLabel / .etaValue
+   - .statusBadge / .statusInbound / .statusArrived
+   - .narrativeBlock / .resourceBlock
+   - .footer / .bundleId
+   ============================================================================ */
+
+/* ── Backdrop ─────────────────────────────────────────────────────────── */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-4);
+  backdrop-filter: blur(2px);
+}
+
+/* ── Modal Container ──────────────────────────────────────────────────── */
+
+.modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Header Bar (Sprint 3: crew info + ETA + status + controls) ─────── */
+/*
+  Two-row layout:
+    Top row (.headerMain): crew info | ETA display | status badge
+    Right column (.headerControls): ESI badge + archive badge + close button
+
+  The header is the most critical section — it answers:
+  "Who's bringing this patient, when do they arrive, and are they here yet?"
+*/
+
+.header {
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+/* Single row: crew | ETA | status | ESI | close — all on one line */
+.headerRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+  width: 100%;
+  min-width: 0;
+}
+
+/* headerSub no longer used — kept for backward compat to avoid CSS errors */
+.headerSub {
+  display: none;
+}
+
+/* Left side: crew info */
+.headerMain {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Crew context block: Unit # | Medic Name | 📞 Phone */
+.crewInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.unitBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #a5b4fc;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.medicName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.medicPhone {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.medicPhone:hover {
+  text-decoration: underline;
+}
+
+/* ETA display — fixed width, no flex-grow so items stay evenly distributed */
+.etaDisplay {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 130px;
+}
+
+.etaLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.etaValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Status badge */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.statusInbound {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--color-disconnected);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.statusArrived {
+  background: rgba(34, 197, 94, 0.12);
+  color: var(--color-connected);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+/* Right side controls: status badge + mode badge + ESI + close */
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.modeBadge {
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 2px 8px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.modeLoading {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.esiBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px solid;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  background: transparent;
+}
+
+.closeBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+
+.closeBtn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-light);
+}
+
+/* ── Fetch Error Banner ───────────────────────────────────────────────── */
+
+.fetchError {
+  padding: var(--space-3) var(--space-5);
+  background: rgba(239, 68, 68, 0.08);
+  border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+  font-size: 12px;
+  color: var(--color-disconnected);
+}
+
+/* ── Modal Body (scrollable inside leftPane) ─────────────────────────── */
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 28px 80px; /* 80px bottom padding clears the sticky arrive bar */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* ── Section ─────────────────────────────────────────────────────────── */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 0;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Field Grid ──────────────────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-3) var(--space-4);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.valueAllergy {
+  color: #f87171;
+  font-weight: 600;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* ── Triage Narrative Block ──────────────────────────────────────────── */
+/*
+  Full-width text block below the grid fields in Clinical Narrative section.
+  Expanded (not truncated) — this is the medic's full pre-hospital narrative.
+*/
+
+.narrativeBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  border-left: 3px solid var(--accent);
+}
+
+.narrativeText {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+/* ── Resource Requirement Block ──────────────────────────────────────── */
+
+.resourceBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-block;
+  padding: 3px 9px;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--accent);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* ── Vital Signs Grid ─────────────────────────────────────────────────── */
+/*
+  3-column card grid. Each card is large and legible — clinicians read
+  vitals at a glance under pressure. Large font, clear label hierarchy.
+*/
+
+.vitalsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.vitalCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-2);
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.vitalLabel {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.vitalValue {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.vitalUnit {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: 3px;
+}
+
+/* ── Footer (Bundle ID) ──────────────────────────────────────────────── */
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+
+.bundleId {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ── Patient Name (legacy — kept for compatibility) ──────────────────── */
+
+.patientName {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.patientMeta {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ── Sprint 5 Additions ──────────────────────────────────────────────── */
+
+/* Demographics — hug left, consistent gap, no dividers */
+.demoRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.demoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.demoLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.demoValue {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.demoDivider {
+  color: var(--border-light);
+  font-weight: 300;
+  align-self: center;
+  padding-top: 12px;
+}
+
+/* Required Resources chip — yellow (Item 7) */
+.chipResource {
+  display: inline-block;
+  padding: 3px 9px;
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid #CA8A04;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #CA8A04;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* Interventions chip — orange (kept for backward compat, not used in modal) */
+.chipIntervention {
+  display: inline-block;
+  padding: 3px 9px;
+  background: rgba(251, 146, 60, 0.15);
+  border: 1px solid #EA580C;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #EA580C;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* Required Resources chip — red (revised Sprint 5) */
+.chipResourceRed {
+  display: inline-block;
+  padding: 3px 9px;
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid #DC2626;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #fca5a5;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* Known History chip — teal (Sprint 5 Medical Background) */
+.chipHistory {
+  display: inline-block;
+  padding: 3px 9px;
+  background: rgba(20, 184, 166, 0.12);
+  border: 1px solid #0D9488;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #5eead4;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* Shared flex row — used for contextual data, clinical narrative fields, etc.
+   Hugs left with consistent 32px gap. Matches Demographics spacing. */
+.contextRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+/* Allergies + Isolation row — wider gap so they breathe side by side */
+.allergyRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+
+/* Medications chip — violet (distinct from blue interventions) */
+.chipMed {
+  display: inline-block;
+  padding: 3px 9px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid #7C3AED;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #c4b5fd;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* ── Abnormal vital overrides ──────────────────────────────────────── */
+
+.vitalCardAbnormal {
+  border-color: rgba(239, 68, 68, 0.45) !important;
+  background: rgba(239, 68, 68, 0.07) !important;
+}
+
+.vitalValueAbnormal {
+  color: #f87171 !important;
+}
+
+.vitalFlag {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f87171;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Sprint 4.3: Section Flash Animation + History Entry Styles
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes sectionFlash {
+  0%   { background-color: rgba(249, 115, 22, 0.18); }
+  100% { background-color: transparent; }
+}
+
+.historyEntry {
+  padding: 10px 0;
+  border-bottom: 1px solid #1e293b;
+}
+
+.historyEntry:last-child {
+  border-bottom: none;
+}
+
+.historyEntryHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.historyEntryLabel {
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.historyEntryDate {
+  font-size: 10px;
+  color: #475569;
+}
+
+.currentBadge {
+  margin-left: auto;
+  padding: 1px 8px;
+  border-radius: 8px;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid #22c55e;
+  color: #4ade80;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.vitalCardGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.assessSubHeader {
+  font-size: 10px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  margin-top: 2px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Sprint 4.2: Two-Pane Modal Layout + Arrive Bar + Edit Markers
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Two-Pane Outer Container ────────────────────────────────────────────── */
+.modalOuter {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: min(1340px, 96vw);
+  max-height: 90vh;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  background: #0f172a;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  overflow: hidden;   /* clip child border-radius */
+}
+
+/* ── Left Pane: Clinical Details ─────────────────────────────────────────── */
+.leftPane {
+  flex: 0 0 65%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  position: relative; /* for sticky arrive bar */
+  border-right: 1px solid #1e293b;
+}
+
+/* ── Right Pane: Chat ─────────────────────────────────────────────────────── */
+.rightPane {
+  flex: 0 0 33%;
+  min-width: 280px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Arrive Action Bar (sticky bottom of left pane) ─────────────────────── */
+.arriveBar {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 20px;
+  background: #0f172a;
+  border-top: 1px solid #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.arriveBtn {
+  padding: 9px 22px;
+  border-radius: 6px;
+  border: none;
+  background: #22c55e;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.arriveBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.arriveBtn:not(:disabled):hover {
+  opacity: 0.85;
+}
+
+.arriveConfirmText {
+  font-size: 13px;
+  color: #e2e8f0;
+  flex: 1;
+}
+
+.arriveConfirmBtn {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: none;
+  background: #f59e0b;
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.arriveConfirmBtn:hover { opacity: 0.88; }
+
+.arriveCancelBtn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid #475569;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.arriveCancelBtn:hover { border-color: #64748b; }
+
+.arriveErrorText {
+  font-size: 11px;
+  color: #f87171;
+  flex: 1;
+}
+
+/* ── Edit Markers in Header ──────────────────────────────────────────────── */
+.editedBadge {
+  background: rgba(120, 53, 15, 0.6);
+  color: #fef3c7;
+  border: 1px solid #92400e;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.lastUpdated {
+  font-size: 11px;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+/* ── Responsive: narrow screens stack vertically ─────────────────────────── */
+@media (max-width: 1024px) {
+  .modalOuter {
+    flex-direction: column;
+    max-height: 95vh;
+  }
+  .leftPane {
+    flex: 0 0 auto;
+    max-height: 58vh;
+    border-right: none;
+    border-bottom: 1px solid #1e293b;
+  }
+  .rightPane {
+    flex: 0 0 auto;
+    max-height: 35vh;
+    min-width: 0;
+  }
+}

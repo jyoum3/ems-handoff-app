@@ -1,0 +1,614 @@
+/* LiveHandoffView.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
+/* ── Header Bar ───────────────────────────────────────── */
+.headerBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #0f172a;
+  border-bottom: 1px solid #334155;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.alsPill {
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.alsPillAls { background: rgba(249,115,22,0.15); border: 1px solid #F97316; color: #fb923c; }
+.alsPillBls { background: rgba(59,130,246,0.15); border: 1px solid #3b82f6; color: #60a5fa; }
+
+.unitName {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f1f5f9;
+  flex-shrink: 0;
+}
+
+.patientName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f1f5f9;
+  /* flex:1 removed — it was consuming all remaining space and pushing the
+     hospital/ETA/status cluster to the far right of the row. Patient name
+     is now auto-width; the cluster naturally follows it. */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.arrow { color: #64748b; flex-shrink: 0; }
+
+.hospitalLabel {
+  font-size: 12px;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.etaLabel {
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.etaNormal { color: #94a3b8; }
+.etaOverdue { color: #ef4444; }
+
+.statusPill {
+  font-size: 11px;
+  font-weight: 700;
+  color: #f87171;
+  flex-shrink: 0;
+}
+
+.connectionDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dotLive { background: #22c55e; }
+.dotConnecting { background: #f59e0b; animation: spin 1s linear infinite; }
+.dotDead { background: #ef4444; }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Scrollable Content ───────────────────────────────── */
+.scrollContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 12px 200px; /* bottom padding for chat bar + action bar */
+}
+
+/* ── Vitals Read View ─────────────────────────────────── */
+.vitalsRow {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 0 8px;
+  scroll-snap-type: x proximity;
+}
+
+.vitalsRow::-webkit-scrollbar { height: 3px; }
+.vitalsRow::-webkit-scrollbar-track { background: transparent; }
+.vitalsRow::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
+
+/* Fix 8A: Bigger vital cards — min-width 90px, larger fonts */
+.vitalCard {
+  flex-shrink: 0;
+  min-width: 90px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  background: #0f172a;
+  text-align: center;
+  scroll-snap-align: start;
+}
+
+.vitalCardAbnormal {
+  border-color: #ef4444;
+}
+
+.vitalCardLabel {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.vitalCardValue {
+  font-size: 18px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.vitalCardValueAbnormal { color: #f87171; }
+
+/* Fix 8B: Unit inline — slightly smaller than value */
+.vitalCardUnit {
+  font-size: 12px;
+  font-weight: 400;
+  color: #94a3b8;
+}
+
+.vitalCardSub {
+  font-size: 10px;
+  color: #64748b;
+  margin-top: 3px;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}
+
+.vitalsSubLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lockIcon { font-size: 10px; color: #475569; }
+
+/* ── Code Status + Alert Badges ───────────────────────── */
+.codeStatusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.codeStatusFull { background: rgba(34,197,94,0.15); border: 1px solid #22c55e; color: #4ade80; }
+.codeStatusDnr  { background: rgba(239,68,68,0.15);  border: 1px solid #ef4444; color: #f87171; }
+
+.alertChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: rgba(251,191,36,0.12);
+  border: 1px solid #fbbf24;
+  color: #fde68a;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ── Encounter type badges ────────────────────────────── */
+.encBadge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  margin: 2px;
+}
+
+/* ── Triage note linked row ───────────────────────────── */
+.linkedRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.1s;
+}
+.linkedRow:hover { background: rgba(249,115,22,0.05); }
+.linkedArrow { color: #F97316; font-size: 12px; flex-shrink: 0; }
+
+/* ── Field read row ───────────────────────────────────── */
+.fieldReadRow {
+  display: flex;
+  gap: 8px;
+  padding: 3px 0;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(51,65,85,0.3);
+}
+.fieldReadLabel { color: #64748b; min-width: 120px; flex-shrink: 0; }
+.fieldReadValue { color: #e2e8f0; flex: 1; }
+
+/* ── Chips (interventions, pertinentNeg, etc.) ────────── */
+.chipList { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip {
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: rgba(51,65,85,0.5);
+  border: 1px solid #475569;
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+/* ── Sticky Action Bar ────────────────────────────────── */
+.actionBar {
+  position: sticky;
+  bottom: 0;
+  z-index: 300;
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #0f172a;
+  border-top: 1px solid #334155;
+}
+
+.actionBtn {
+  flex: 1;
+  padding: 11px 8px;
+  border-radius: 8px;
+  border: 1px solid #475569;
+  background: #1e293b;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s, color 0.15s;
+}
+.actionBtn:hover { background: #334155; color: #f1f5f9; }
+
+.divertBtn {
+  background: rgba(251,191,36,0.10);
+  border-color: #fbbf24;
+  color: #fde68a;
+}
+.divertBtn:hover { background: rgba(251,191,36,0.20); }
+
+.arriveBtn {
+  background: rgba(34,197,94,0.12);
+  border-color: #22c55e;
+  color: #4ade80;
+}
+.arriveBtn:hover { background: rgba(34,197,94,0.22); }
+
+/* ── Inline arrive confirm card ───────────────────────── */
+.arriveConfirmCard {
+  margin: 8px 12px;
+  padding: 14px;
+  border-radius: 8px;
+  background: rgba(34,197,94,0.08);
+  border: 1px solid #22c55e;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.arriveConfirmText {
+  font-size: 14px;
+  color: #f1f5f9;
+  font-weight: 600;
+}
+
+.arriveConfirmActions { display: flex; gap: 8px; }
+
+.arriveConfirmYes {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 7px;
+  border: none;
+  background: #22c55e;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.arriveConfirmNo {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 7px;
+  border: 1px solid #475569;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ── Transport notes ──────────────────────────────────── */
+.transportInput {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.transportTextInput {
+  flex: 1;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #f1f5f9;
+  font-size: 13px;
+  padding: 7px 10px;
+  outline: none;
+  font-family: inherit;
+}
+.transportTextInput:focus { border-color: #F97316; }
+
+.transportAddBtn {
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: none;
+  background: #F97316;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.transportNoteLines {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* ── Section 2 dual edit buttons ─────────────────────── */
+.dualEditHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* ── Sprint 3.3: History Entry Cards ───────────────────────────────── */
+.historyEntry {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #1e293b;
+}
+.historyEntry:last-of-type { border-bottom: none; margin-bottom: 0; }
+
+.historyEntryHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 11px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.historyEntryHeaderLocked {
+  color: #64748b;
+}
+
+.currentBadge {
+  margin-left: auto;
+  padding: 1px 7px;
+  border-radius: 8px;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid #22c55e;
+  color: #4ade80;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* ── Sprint 3.3: Transport Log Entries ─────────────────────────────── */
+.transportLog {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.transportLogEntry {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  padding: 5px 8px;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 6px;
+  border-left: 2px solid #334155;
+  font-size: 12px;
+}
+
+.transportLogTimestamp {
+  font-size: 10px;
+  color: #475569;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.transportLogPrefix {
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.transportLogSummary {
+  color: #cbd5e1;
+  font-size: 12px;
+}
+
+.transportLogComment {
+  color: #94a3b8;
+  font-style: italic;
+  font-size: 11px;
+}
+
+/* ── Sprint 3.3: Add-Entry Form ─────────────────────────────────────── */
+.addEntryForm {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid #334155;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.addEntryFormTitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.addEntryCommentLabel {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.addEntryCommentInput {
+  width: 100%;
+  box-sizing: border-box;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #e2e8f0;
+  font-size: 13px;
+  padding: 8px 10px;
+  resize: vertical;
+  font-family: inherit;
+}
+.addEntryCommentInput:focus {
+  outline: none;
+  border-color: #38bdf8;
+}
+
+.addEntryActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.addEntrySubmitBtn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  background: #16a34a;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.addEntrySubmitBtn:hover:not(:disabled) { background: #15803d; }
+.addEntrySubmitBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.addEntryCancelBtn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid #475569;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.addEntryCancelBtn:hover { background: rgba(71, 85, 105, 0.2); }
+
+.addEntryBtn {
+  margin-top: 8px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: 1px dashed #334155;
+  background: transparent;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition: border-color 0.15s, color 0.15s;
+}
+.addEntryBtn:hover {
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+/* ── Fix 9: Horizontal History Rail ────────────────────────────────── */
+.historyRailHorizontal {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.historyRailHorizontal::-webkit-scrollbar { height: 4px; }
+.historyRailHorizontal::-webkit-scrollbar-track { background: transparent; }
+.historyRailHorizontal::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
+
+.historyEntryColumn {
+  flex-shrink: 0;
+  min-width: 320px;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: rgba(15,23,42,0.5);
+  scroll-snap-align: start;
+}
+
+.historyAddColumn {
+  flex-shrink: 0;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #334155;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.vitalsColumn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/* ── Improvement A: Global Font Size Increases ──────────────────────── */
+
+/* Section title */
+.sectionTitle { font-size: 15px; }
+
+/* Field read rows */
+.fieldReadLabel { font-size: 13px; color: #64748b; }
+.fieldReadValue { font-size: 14px; }
+
+/* History entry header */
+.historyEntryHeader { font-size: 13px; }
+
+/* Transport log */
+.transportLogTimestamp { font-size: 12px; }
+.transportLogPrefix    { font-size: 13px; }
+.transportLogSummary   { font-size: 13px; }
+.transportLogComment   { font-size: 12px; }
+
+/* Chips */
+.chip      { font-size: 13px; }
+.alertChip { font-size: 13px; }

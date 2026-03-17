@@ -1,0 +1,63 @@
+{
+  "resourceType": "Bundle",
+  "id": "EMS-TEST-PRESBY-002",
+  "hospitalId": "HUP-PRESBY",
+  "timestamp": "2026-03-08T02:15:00Z",
+  "handoffStatus": "inbound",
+  "medicUnit": 31,
+  "medicName": "Williams, Tanya",
+  "medicPhone": "215-555-0131",
+  "fromOrigin": {
+    "source": "Skilled Nursing Facility",
+    "address": "7500 Central Ave, Philadelphia, PA 19111"
+  },
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "name": [{ "family": "Nguyen", "given": ["Linh"] }],
+        "gender": "female",
+        "birthDate": "1942-09-04",
+        "extension": [
+          { "url": "known-history", "valueString": "Dementia (moderate), HTN, osteoporosis, prior hip replacement (R)" },
+          { "url": "allergies", "valueString": "Sulfa drugs" },
+          { "url": "isolation", "valueString": "None" }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Encounter",
+        "status": "in-progress",
+        "priority": { "text": "ESI-3 (URGENT)" },
+        "reasonCode": [{ "text": "Fall from standing, right hip pain, unable to bear weight" }],
+        "period": { "end": "2026-03-08T03:20:00Z" },
+        "resourceRequirements": ["X-Ray - Hip", "Ortho Consult"],
+        "interventions": ["Spinal Precautions", "IV Access x1", "Fentanyl 25mcg IV for pain"],
+        "extension": [
+          { "url": "scene-safety", "valueString": "SNF staff present, scene safe." },
+          { "url": "lkw", "valueString": "2026-03-08T01:30:00Z" }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "code": { "text": "Vital Signs" },
+        "component": [
+          { "code": { "text": "HR" }, "valueQuantity": { "value": 82, "unit": "bpm" } },
+          { "code": { "text": "BP" }, "valueString": "148/86 mmHg" },
+          { "code": { "text": "RR" }, "valueQuantity": { "value": 18, "unit": "/min" } },
+          { "code": { "text": "SpO2" }, "valueQuantity": { "value": 97, "unit": "%" } },
+          { "code": { "text": "Temp" }, "valueQuantity": { "value": 98.2, "unit": "°F" } },
+          { "code": { "text": "GCS" }, "valueQuantity": { "value": 14, "unit": "" } },
+          { "code": { "text": "Sugar" }, "valueQuantity": { "value": 110, "unit": "mg/dL" } }
+        ],
+        "note": [
+          { "text": "83F with dementia. Found on floor of room by nursing staff at SNF. C/o R hip pain, shortened and externally rotated. GCS 14 (baseline per staff). Fentanyl given with moderate pain relief. Vitals stable. SNF reports patient has had 2 prior falls this month." }
+        ]
+      }
+    }
+  ]
+}

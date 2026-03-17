@@ -1,0 +1,217 @@
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: 0 var(--space-5);
+  height: 56px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 200px;
+}
+
+.icon {
+  font-size: 20px;
+}
+
+.hospitalInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.hospitalName {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.hospitalId {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+}
+
+.center {
+  flex: 1;
+  text-align: center;
+}
+
+.appTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 200px;
+  justify-content: flex-end;
+}
+
+.liveCountBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+
+.liveCountNumber {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.liveCountLabel {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* ── Connection Status Pill ─────────────────────────────────────── */
+
+.statusPill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.statusLabel {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* Connected — green */
+.status_connected {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+.status_connected .statusDot {
+  background: var(--color-connected);
+  box-shadow: 0 0 4px var(--color-connected);
+  animation: pulse 2s ease-in-out infinite;
+}
+.status_connected .statusLabel {
+  color: var(--color-connected);
+}
+
+/* Connecting / Reconnecting — amber */
+.status_connecting,
+.status_reconnecting {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+.status_connecting .statusDot,
+.status_reconnecting .statusDot {
+  background: var(--color-reconnecting);
+  animation: blink 0.8s ease-in-out infinite;
+}
+.status_connecting .statusLabel,
+.status_reconnecting .statusLabel {
+  color: var(--color-reconnecting);
+}
+
+/* Disconnected — red */
+.status_disconnected {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+.status_disconnected .statusDot {
+  background: var(--color-disconnected);
+}
+.status_disconnected .statusLabel {
+  color: var(--color-disconnected);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+/* ── Sprint 4: Shift Session Display ────────────────────────────── */
+/*
+  Shows the logged-in user's role (color-coded) and name in the banner.
+  Compact layout keeps it from crowding the SignalR status pill.
+*/
+
+.sessionGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Role badge: "CHARGE" in role color — border + bg from inline styles */
+.roleBadge {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+  /* color, borderColor, backgroundColor applied as inline styles */
+}
+
+/* User name: "— Jane Doe" in muted text */
+.userLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Switch Role button: minimal ghost button */
+.btnSwitchRole {
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.btnSwitchRole:hover {
+  color: var(--text-secondary);
+  border-color: var(--text-muted);
+}

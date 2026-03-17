@@ -1,0 +1,542 @@
+/* ============================================================================
+   LiveQueue.module.css — Live Patient Queue Table Styles
+   ============================================================================
+
+   Sprint 3 Additions:
+   - .rowOverdue      → Red background for OVERDUE rows (Ghost Handoff alert)
+   - .overdueBadge    → Inline "OVERDUE" alert badge within the ETA cell
+   - .etaOverdueCell  → Flex wrapper for the overdue time + badge layout
+   - .tdUnit          → Medic Unit column (between ETA and Status)
+   - .unitBadge       → Styled "#42" unit number display
+   ============================================================================ */
+
+/* ── Flash-to-Fade Animation ────────────────────────────────────────── */
+/* Triggered when a new/updated patient arrives via SignalR.            */
+/* The amber highlight fades to transparent over 2.5s.                  */
+/* Matches the 2500ms setTimeout in usePatientQueue.ts.                 */
+
+@keyframes flashFade {
+  0%   { background-color: var(--flash-start); }
+  100% { background-color: transparent; }
+}
+
+.rowFlash {
+  animation: flashFade 2.5s ease-out forwards;
+}
+
+/* ── OVERDUE Row (Sprint 3 — Ghost Handoff Alert) ────────────────────── */
+/*
+  Applied when system time has passed the patient's Absolute ETA without
+  an arrival being recorded. Signals to clinical staff that this patient
+  may be a "Ghost Handoff" — patient rerouted, medic forgot to arrive,
+  or hospital staff forgot to close the handoff.
+
+  WHY RED vs. AMBER:
+  Amber (flashFade) = new incoming patient — informational, expected.
+  Red (rowOverdue)  = system alert — action required, unexpected.
+  These two visual states must be visually distinct at a glance.
+
+  The !important on background-color is required because .rowFlash uses
+  an animation that also sets background-color. Without !important, a row
+  that is BOTH flashing AND overdue would flash amber → then snap to red
+  mid-animation, which is disorienting. The !important ensures the overdue
+  state "wins" over the flash animation immediately.
+*/
+
+.rowOverdue {
+  background-color: rgba(239, 68, 68, 0.12) !important;
+  border-left: 3px solid var(--color-disconnected);
+}
+
+.rowOverdue:hover {
+  background-color: rgba(239, 68, 68, 0.18) !important;
+}
+
+/* ── OVERDUE Badge ────────────────────────────────────────────────────── */
+/*
+  Displayed inline in the ETA cell when isOverdue is true.
+  Red pill badge with white text — high contrast for immediate recognition.
+  Positioned to the right of the absolute ETA time text.
+*/
+
+.overdueBadge {
+  display: inline-block;
+  padding: 2px 7px;
+  background: var(--color-disconnected);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* Flex wrapper for the ETA time + OVERDUE badge layout */
+.etaOverdueCell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+}
+
+/* ── Table Wrapper ──────────────────────────────────────────────────── */
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────── */
+
+.headerRow {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.th {
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Rows ───────────────────────────────────────────────────────────── */
+
+.row {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row:hover {
+  background: var(--bg-card-hover);
+}
+
+.td {
+  padding: var(--space-3);
+  vertical-align: middle;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* ── ETA Column ─────────────────────────────────────────────────────── */
+
+.tdEta {
+  min-width: 140px;
+}
+
+.etaTime {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.etaArriving {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-connected);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Unit Column (Sprint 3: medicUnit between ETA and Status) ─────────── */
+
+.tdUnit {
+  min-width: 60px;
+}
+
+.unitBadge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(100, 116, 139, 0.12);
+  border: 1px solid rgba(100, 116, 139, 0.25);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ── Status Column ───────────────────────────────────────────────────── */
+
+.statusBadge {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-disconnected);
+  white-space: nowrap;
+}
+
+/* ── Patient Column ──────────────────────────────────────────────────── */
+
+.tdPatient {
+  min-width: 160px;
+}
+
+.patientName {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.patientDemo {
+  display: block;
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 1px;
+}
+
+/* ── ESI Badge ───────────────────────────────────────────────────────── */
+
+.esiBadge {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  background: transparent;
+}
+
+/* ── Chief Complaint ─────────────────────────────────────────────────── */
+
+.tdCC {
+  max-width: 200px;
+}
+
+.ccText {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+  font-size: 13px;
+}
+
+/* ── Vitals ──────────────────────────────────────────────────────────── */
+
+.vital {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.missing {
+  color: var(--text-muted);
+}
+
+/* ── Resource Requirement Chips ─────────────────────────────────────── */
+
+.tdResources {
+  max-width: 240px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.chip {
+  display: inline-block;
+  padding: 2px 7px;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 4px;
+  font-size: 11px;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* ── Action Buttons ─────────────────────────────────────────────────── */
+
+/* NOTE: tdActions must NOT have display:flex — setting display:flex on a
+   <td> overrides its table-cell behavior and breaks vertical-align: middle.
+   Instead, the inner .actionsWrapper div is the flex container. */
+.tdActions {
+  min-width: 140px;
+  padding: var(--space-2) var(--space-3);
+  vertical-align: middle;
+}
+
+.actionsWrapper {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.btnDetails {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.btnDetails:hover {
+  color: var(--text-primary);
+  border-color: var(--border-light);
+}
+
+.btnArrive {
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--color-connected);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.btnArrive:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.btnArrive:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.arriveError {
+  color: var(--color-disconnected);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: help;
+}
+
+/* ── Inline Arrival Confirmation (Sprint 4) ─────────────────────────── */
+/*
+  Replaces the Arrive button with a compact "Confirm?" prompt.
+  Kept inline (not a modal) for speed — clinical workflows require
+  minimal clicks. The nurse gets one confirmation step, not a dialog.
+*/
+
+.confirmGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: nowrap;
+}
+
+.confirmLabel {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.btnConfirmYes {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--color-connected);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.btnConfirmYes:hover {
+  opacity: 0.85;
+}
+
+.btnConfirmNo {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.btnConfirmNo:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+
+/* ── Empty State ─────────────────────────────────────────────────────── */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: 80px var(--space-6);
+  color: var(--text-secondary);
+}
+
+.emptyIcon {
+  font-size: 36px;
+}
+
+.emptyText {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.emptySubtext {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Sprint 5 Additions ──────────────────────────────────────────────── */
+
+/* Abnormal vital — red + bold (Item 17) */
+.vitalAbnormal {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-disconnected);
+  font-weight: 700;
+}
+
+/* Required Resources chip — yellow (Item 7) */
+.chipResource {
+  display: inline-block;
+  padding: 2px 7px;
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid #CA8A04;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #CA8A04;
+  white-space: nowrap;
+}
+
+/* Comments column — tighter width to sit closer to Actions */
+.tdComments {
+  min-width: 130px;
+  max-width: 190px;
+  white-space: normal;
+}
+
+/* OVERDUE ETA text (shown inline, no badge needed — display includes "+Nmin") */
+.etaOverdue {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--color-disconnected);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* Restore error indicator (used in HistoryTab via same module) */
+.restoreError {
+  color: var(--color-disconnected);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: help;
+}
+
+/* ── Sprint 4.1: Notification Indicator Column ──────────────────────────────── */
+.tdNotify {
+  width: 28px;
+  min-width: 28px;
+  padding: 4px 4px;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: #0f172a;  /* match table row background */
+  vertical-align: middle;
+  text-align: center;
+}
+
+/* Wrapper div inside td for flex stacking (td itself cannot use display:flex) */
+.notifyDots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.dotBlue,
+.dotAmber {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: dotPulse 1.5s ease-in-out infinite;
+}
+
+.dotBlue  { background: #3b82f6; }
+.dotAmber { background: #f59e0b; }
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%       { transform: scale(1.5); opacity: 0.65; }
+}
+
+/* ── Sprint 4.1: Alert Badges Column ────────────────────────────────────────── */
+.tdAlertBadges {
+  max-width: 160px;
+  vertical-align: middle;
+}
+
+.alertBadgeGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  max-width: 140px;
+}
+
+.alertBadgeChip {
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid #f59e0b;
+  color: #fbbf24;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+

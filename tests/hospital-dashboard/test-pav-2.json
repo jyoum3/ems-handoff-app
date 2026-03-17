@@ -1,0 +1,71 @@
+{
+  "resourceType": "Bundle",
+  "id": "EMS-TEST-PAV-002",
+  "hospitalId": "HUP-PAV",
+  "timestamp": "2026-03-08T02:20:00Z",
+  "handoffStatus": "inbound",
+  "medicUnit": 17,
+  "medicName": "Chen, Lisa",
+  "medicPhone": "215-555-0117",
+  "fromOrigin": {
+    "source": "Residence",
+    "address": "4200 Pine St, Philadelphia, PA 19104"
+  },
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "name": [{ "family": "Okafor", "given": ["Adaeze"] }],
+        "gender": "female",
+        "birthDate": "1991-06-15",
+        "medications": ["Metformin 500mg", "Atorvastatin 40mg"],
+        "extension": [
+          { "url": "known-history", "valueString": "Type 2 DM, hyperlipidemia" },
+          { "url": "allergies", "valueString": "NKDA" },
+          { "url": "isolation", "valueString": "None" }
+        ],
+        "contact": [
+          {
+            "name": { "text": "Okafor, Emmanuel" },
+            "relationship": [{ "text": "Spouse" }],
+            "telecom": [{ "system": "phone", "value": "215-555-0220" }]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Encounter",
+        "status": "in-progress",
+        "priority": { "text": "ESI-2 (EMERGENT)" },
+        "reasonCode": [{ "text": "Altered mental status, known diabetic" }],
+        "period": { "end": "2026-03-08T03:10:00Z" },
+        "resourceRequirements": ["Glucose Lab - STAT", "IV Dextrose 50%"],
+        "interventions": ["IV Access x1", "Glucose Check - 38 mg/dL", "Dextrose 50% 25g IV push"],
+        "extension": [
+          { "url": "events", "valueString": "Patient found unresponsive in bed by spouse. Last meal 8hrs prior. BGL 38 on scene. Responsive to D50 with GCS improving from 8 to 14." },
+          { "url": "lkw", "valueString": "2026-03-08T01:00:00Z" }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "code": { "text": "Vital Signs" },
+        "component": [
+          { "code": { "text": "HR" }, "valueQuantity": { "value": 98, "unit": "bpm" } },
+          { "code": { "text": "BP" }, "valueString": "102/64 mmHg" },
+          { "code": { "text": "RR" }, "valueQuantity": { "value": 16, "unit": "/min" } },
+          { "code": { "text": "SpO2" }, "valueQuantity": { "value": 96, "unit": "%" } },
+          { "code": { "text": "Temp" }, "valueQuantity": { "value": 97.8, "unit": "°F" } },
+          { "code": { "text": "GCS" }, "valueQuantity": { "value": 14, "unit": "" } },
+          { "code": { "text": "Sugar" }, "valueQuantity": { "value": 62, "unit": "mg/dL" } }
+        ],
+        "note": [
+          { "text": "Altered mental status due to hypoglycemia. BGL 38 on arrival. D50 given IV push with marked improvement. GCS now 14/15. Patient oriented x3 on arrival at ED. Continue glucose monitoring." }
+        ]
+      }
+    }
+  ]
+}

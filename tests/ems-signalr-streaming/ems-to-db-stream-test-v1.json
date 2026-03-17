@@ -1,0 +1,56 @@
+{
+    "resourceType": "Bundle",
+    "id": "EMS-STREAM-INGESTION-TEST-001",
+    "hospitalId": "HUP-CEDAR",
+    "timestamp": "2026-03-06T15:45:00Z",
+    "handoffStatus": "inbound",
+    "entry": [
+        {
+            "resource": {
+                "resourceType": "Patient",
+                "name": [{"family": "Doe", "given": ["John"]}],
+                "gender": "male",
+                "birthDate": "1980-05-12"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Encounter",
+                "status": "in-progress",
+                "priority": {"text": "ESI-2 (EMERGENT)"},
+                "reasonCode": [{"text": "Shortness of Breath"}],
+                "period": {"end": "2026-03-06T16:15:00Z"},
+                "resourceRequirements": [
+                    "Oxygen - 15L NRB",
+                    "Isolation Room - Contact Precautions",
+                    "Bariatric Bed"
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Observation",
+                "status": "final",
+                "component": [
+                    {
+                        "code": {"text": "Temp"},
+                        "valueQuantity": {
+                            "value": 101.2,
+                            "unit": "°F",
+                            "system": "http://unitsofmeasure.org",
+                            "code": "[degF]"
+                        }
+                    },
+                    {
+                        "code": {"text": "SpO2"},
+                        "valueQuantity": {
+                            "value": 92.0,
+                            "unit": "%"
+                        }
+                    }
+                ],
+                "note": [{"text": "Patient is stable but requires high-flow O2."}]
+            }
+        }
+    ]
+}

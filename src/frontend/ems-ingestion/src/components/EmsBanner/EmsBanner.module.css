@@ -1,0 +1,136 @@
+/* EmsBanner.module.css — Persistent EMS Top Bar */
+
+.banner {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.625rem 1.5rem;
+  background: #0f172a;
+  border-bottom: 2px solid #F97316;
+  min-height: 56px;
+}
+
+/* ── Left: Crew Identity ─────────────────────────────────────────── */
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  flex: 1;
+}
+
+.unitBadge {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #F97316;
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+}
+
+.separator {
+  color: #475569;
+  font-weight: 300;
+}
+
+.medicName {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #f8fafc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+/* ── Center: WebSocket Status ────────────────────────────────────── */
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.wsIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid #334155;
+  border-radius: 999px;
+}
+
+.wsOrb {
+  font-size: 0.6rem;
+  line-height: 1;
+}
+
+.wsLabel {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #64748b;
+  letter-spacing: 0.025em;
+}
+
+/* ── Right: Phone + Switch Shift ────────────────────────────────── */
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.phone {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #94a3b8;
+  white-space: nowrap;
+  letter-spacing: 0.025em;
+}
+
+.btnSwitch {
+  padding: 0.375rem 0.875rem;
+  background: transparent;
+  border: 1px solid #475569;
+  border-radius: var(--radius-sm);
+  color: #94a3b8;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.btnSwitch:hover {
+  border-color: #F97316;
+  color: #F97316;
+}
+
+/* ── Responsive: collapse on very narrow screens ─────────────────── */
+
+@media (max-width: 480px) {
+  .banner {
+    padding: 0.5rem 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .center {
+    display: none; /* hide WS indicator on small screens */
+  }
+
+  .medicName {
+    max-width: 120px;
+  }
+
+  .phone {
+    display: none; /* phone visible in EmsBanner on wider screens */
+  }
+}

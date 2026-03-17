@@ -1,0 +1,314 @@
+/* ============================================================================
+   RolePicker.module.css — Shift Check-In Overlay Styles
+   ============================================================================
+
+   Full-screen overlay that forces staff identification before dashboard access.
+   Uses the app's dark clinical color palette with role-specific accent colors
+   applied as inline styles (via ROLE_COLORS from useUser.ts) so they stay
+   in sync with a single source of truth.
+   ============================================================================ */
+
+/* ── Overlay Backdrop ─────────────────────────────────────────────────── */
+/*
+  Fixed fullscreen: covers the entire viewport, including the hospital
+  selector behind it. backdrop-filter blur gives depth without obscuring
+  the fact that the dashboard exists behind the overlay.
+  z-index: 1000 ensures it sits above all other dashboard elements.
+*/
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 14, 23, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: var(--space-4);
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────── */
+
+.card {
+  width: 100%;
+  max-width: 480px;
+  /* Prevent card from exceeding viewport on small screens */
+  max-height: calc(100svh - 2rem);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Body ─────────────────────────────────────────────────────────────── */
+
+.body {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  /* Allow body to scroll when card max-height is reached */
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* ── Section Labels ───────────────────────────────────────────────────── */
+
+.sectionLabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: var(--space-2);
+}
+
+/* ── Name Section ─────────────────────────────────────────────────────── */
+
+.nameSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.nameRow {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.inputGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inputLabel {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: var(--accent);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ── Role Section ─────────────────────────────────────────────────────── */
+
+.roleSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.roleList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Role option button — unstyled base, styled programmatically */
+.roleOption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+  text-align: left;
+  width: 100%;
+}
+
+.roleOption:hover {
+  border-color: var(--text-muted);
+  background: var(--bg-card-hover);
+}
+
+/* Active selected state — border + background applied via inline style.
+   The dynamic border-color and background-color are applied via inline
+   style from ROLE_COLORS in RolePicker.tsx so a single source of truth
+   drives both the dot color and the card accent. */
+.roleSelected {
+  font-weight: 700;
+}
+
+/* Role color indicator dot */
+.roleDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background-color 0.15s;
+}
+
+.roleOptionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+/* "CHARGE", "PFC", etc. — colored when selected */
+.roleOptionTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  transition: color 0.15s;
+  letter-spacing: 0.3px;
+}
+
+.roleOptionLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.roleOptionDesc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ── Preview Strip ────────────────────────────────────────────────────── */
+/*
+  Shown when both name and role are complete — gives the user visual
+  confirmation of how they'll appear in comments and the banner before
+  they click Start Shift.
+*/
+
+.preview {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.previewLabel {
+  color: var(--text-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.previewRole {
+  font-weight: 700;
+  font-size: 13px;
+  /* color applied as inline style from ROLE_COLORS */
+}
+
+.previewName {
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────── */
+
+.footer {
+  padding: var(--space-4) var(--space-5);
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: stretch;
+}
+
+.btnStart {
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent); /* fallback — overridden by inline style */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.15s, background-color 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.btnStart:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.btnStart:disabled {
+  background: var(--bg-secondary) !important;
+  color: var(--text-muted);
+  cursor: not-allowed;
+  border: 1px solid var(--border);
+}
+
+.disclaimer {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0;
+  line-height: 1.5;
+}

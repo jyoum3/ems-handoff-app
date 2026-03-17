@@ -1,0 +1,46 @@
+{
+    "resourceType": "Bundle",
+    "hospitalId": "HUP-PRESBY",
+    "id": "EMS-HANDOFF-UNKNOWN-TEST-V1",
+    "timestamp": "2026-03-03T23:15:00Z",
+    "entry": [
+        {
+            "resource": {
+                "resourceType": "Patient",
+                "name": [{ "family": "Unknown", "given": ["Unknown"] }],
+                "gender": "Unknown",
+                "birthDate": "Unknown",
+                "extension": [
+                    { "url": "age", "valueString": "Unknown" }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Encounter",
+                "status": "in-progress",
+                "priority": { "text": "ESI-1 (CRITICAL)" },
+                "reasonCode": [{ "text": "STEMI / ACLS in Progress" }],
+                "period": { "end": "2026-03-03T23:25:00Z" },
+                "extension": [
+                    { "url": "scene-safety", "valueString": "Safe" },
+                    { "url": "lkw", "valueDateTime": "2026-03-03T23:05:00Z" }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Observation",
+                "status": "final",
+                "code": { "text": "Vital Signs" },
+                "component": [
+                    { "code": { "text": "HR" }, "valueQuantity": { "value": 0, "unit": "bpm" } },
+                    { "code": { "text": "BP" }, "valueString": "0/0", "unit": "mmHg" },
+                    { "code": { "text": "SpO2" }, "valueQuantity": { "value": 0, "unit": "%" } }
+                ],
+                "note": [{ "text": "STEMI. ACLS in progress. 8 rounds CPR. 4mg Epi given. Patient intubated. ETA 10 mins." }]
+            }
+        }
+    ]
+}
+

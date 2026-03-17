@@ -1,0 +1,396 @@
+/* ============================================================================
+   HistoryTab.module.css — Arrived Patient History Table Styles
+   ============================================================================
+
+   Sprint 3: Full table layout replacing the card list from Sprint 2.
+   Column structure mirrors LiveQueue exactly so staff muscle memory transfers.
+
+   New classes vs Sprint 2:
+   - .tableWrapper / .table / .headerRow / .th → table layout (new)
+   - .tdArrived / .arrivedTime               → replaces ETA column
+   - .tdUnit / .unitBadge                    → medic unit column
+   - .arrivedBadge                           → "✅ Arrived" status
+   - .btnRestore / .restoreError             → Restore action button
+   - .spinner                                → hydration loading spinner
+   ============================================================================ */
+
+/* ── Table Wrapper ──────────────────────────────────────────────────── */
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────── */
+
+.headerRow {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.th {
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Rows ───────────────────────────────────────────────────────────── */
+
+.row {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row:hover {
+  background: var(--bg-card-hover);
+}
+
+/* Slightly dimmed vs live queue rows — history is "past tense" */
+.row {
+  opacity: 0.88;
+}
+
+.row:hover {
+  opacity: 1;
+}
+
+.td {
+  padding: var(--space-3);
+  vertical-align: middle;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* ── Arrived Time Column (replaces ETA) ─────────────────────────────── */
+/*
+  Positioned identically to the ETA column in LiveQueue so the table
+  columns visually line up when staff glance between the two tabs.
+*/
+
+.tdArrived {
+  min-width: 70px;
+}
+
+.arrivedTime {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Unit Column ─────────────────────────────────────────────────────── */
+
+.tdUnit {
+  min-width: 60px;
+}
+
+.unitBadge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(100, 116, 139, 0.12);
+  border: 1px solid rgba(100, 116, 139, 0.25);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ── Arrived Status Badge ───────────────────────────────────────────── */
+
+.arrivedBadge {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-connected);
+  white-space: nowrap;
+}
+
+/* ── Patient Column ──────────────────────────────────────────────────── */
+
+.tdPatient {
+  min-width: 160px;
+}
+
+.patientName {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.patientDemo {
+  display: block;
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 1px;
+}
+
+/* ── ESI Badge ───────────────────────────────────────────────────────── */
+
+.esiBadge {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  background: transparent;
+}
+
+/* ── Chief Complaint ─────────────────────────────────────────────────── */
+
+.tdCC {
+  max-width: 200px;
+}
+
+.ccText {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+  font-size: 13px;
+}
+
+/* ── Vitals ──────────────────────────────────────────────────────────── */
+
+.vital {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.missing {
+  color: var(--text-muted);
+}
+
+/* ── Resource Requirement Chips ─────────────────────────────────────── */
+
+.tdResources {
+  max-width: 240px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.chip {
+  display: inline-block;
+  padding: 2px 7px;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 4px;
+  font-size: 11px;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* ── Action Buttons ─────────────────────────────────────────────────── */
+
+.tdActions {
+  min-width: 150px;
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+}
+
+.btnDetails {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.btnDetails:hover {
+  color: var(--text-primary);
+  border-color: var(--border-light);
+}
+
+/*
+  Restore button: amber/warning color to signal "recovery action".
+  NOT green (that's Arrive) — this is an UNDO/recovery action.
+  Amber signals: "I'm moving something back — double-check before clicking."
+*/
+.btnRestore {
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a1a1a;
+  background: #f59e0b;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.btnRestore:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.btnRestore:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.restoreError {
+  color: var(--color-disconnected);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: help;
+}
+
+/* ── Empty / Loading / Error States ─────────────────────────────────── */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: 80px var(--space-6);
+  color: var(--text-secondary);
+}
+
+.emptyIcon {
+  font-size: 36px;
+}
+
+.emptyText {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.emptySubtext {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Inline Restore Confirmation (Sprint 4) ─────────────────────────── */
+/* Mirrors the Arrive confirmation in LiveQueue.module.css exactly. */
+
+.confirmGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: nowrap;
+}
+
+.confirmLabel {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.btnConfirmYes {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a1a1a;
+  background: #f59e0b;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.btnConfirmYes:hover {
+  opacity: 0.85;
+}
+
+.btnConfirmNo {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.btnConfirmNo:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+
+/* ── Sprint 5 Additions ──────────────────────────────────────────────── */
+
+/* Restore button — green (Item 8) */
+.btnRestore {
+  background: #10B981 !important;
+  color: #fff !important;
+}
+
+/* Abnormal vital — red + bold (Item 17) */
+.vitalAbnormal {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-disconnected);
+  font-weight: 700;
+}
+
+/* Required Resources chip — yellow (Item 7) */
+.chipResource {
+  display: inline-block;
+  padding: 2px 7px;
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid #CA8A04;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #CA8A04;
+  white-space: nowrap;
+}
+
+/* Comments column */
+.tdComments {
+  min-width: 200px;
+  max-width: 300px;
+  white-space: normal;
+}

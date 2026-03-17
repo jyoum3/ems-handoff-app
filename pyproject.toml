@@ -1,0 +1,18 @@
+[project]
+name = "ems-handoff-app"
+version = "0.1.0"
+description = "Real-time EMS-to-ED handoff platform — Azure serverless PHI pipeline."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    # Azure Functions host runtime bindings
+    "azure-functions>=1.24.0",
+    # Cosmos DB SDK — primary PHI store and chat/comment containers
+    "azure-cosmos>=4.15.0",
+    # Managed Identity / Service Principal credential chain (DefaultAzureCredential)
+    "azure-identity>=1.25.2",
+    # Blob Storage SDK — PHI archive (handoff-archive) and ECG uploads (ecg-uploads)
+    "azure-storage-blob>=12.28.0",
+    # FHIR Bundle schema validation — the Pydantic "Bouncer" at every HTTP entry point
+    "pydantic>=2.12.5",
+]
