@@ -269,5 +269,5 @@ For production deployments:
 
 ## Author
 
-**James Youm** — Cloud & Full-Stack Engineer  
+**James Youm** — Cloud Computing Senior  
 Portfolio project demonstrating Azure serverless architecture, HIPAA-aware data design, real-time streaming, and React/TypeScript PWA development.
