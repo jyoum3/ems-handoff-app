@@ -15,7 +15,6 @@
     { "route": "/*.png",        "allowedRoles": ["anonymous"] },
     { "route": "/*.svg",        "allowedRoles": ["anonymous"] },
     { "route": "/*.txt",        "allowedRoles": ["anonymous"] },
-    { "route": "/",             "allowedRoles": ["anonymous"] },
     { "route": "/*",            "allowedRoles": ["authenticated"] }
   ],
 
