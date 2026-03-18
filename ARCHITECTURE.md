@@ -336,9 +336,28 @@ React 18 + TypeScript + Vite
 
 **API Contract Alignment:** The TypeScript `FHIRBundle` interface in `src/types/fhir.ts` must mirror the Python `FHIRBundle` Pydantic model in `src/api/models.py`. When a new field is added to the Pydantic model, the corresponding TypeScript interface must be updated in both frontend projects.
 
+**Production API URL — Build-Time Injection:**
+Both `api.ts` service files use a Vite build-time environment variable to resolve the Function App base URL:
+
+```typescript
+const BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '/api';
+```
+
+In production, `VITE_API_BASE_URL = https://ems-handoff-api.azurewebsites.net/api` is injected by the GitHub Actions workflow (via an `env:` block on the `Azure/static-web-apps-deploy@v1` step). Vite replaces `import.meta.env.VITE_API_BASE_URL` with the literal string at bundle time. In local development, the variable is unset and the `?? '/api'` fallback activates, routing through the Vite dev proxy to `localhost:7071`.
+
+This pattern allows one Function App to serve both SWAs via CORS without the Azure SWA "managed backend link" (which restricts a Function App to one SWA).
+
 **Vite Dev Proxy:** The `vite.config.ts` in each frontend proxies `/api/*` to `http://localhost:7071` (Azure Functions Core Tools default port) during local development. No CORS configuration is needed — the proxy appears as the same origin to the browser.
 
-**PWA Configuration:** Both apps include `public/manifest.json` and `public/staticwebapp.config.json`. The SWA config enforces SPA routing (all paths → `index.html`), sets `X-Frame-Options: DENY`, and configures a Content Security Policy.
+**SWA Authentication (Entra ID):**
+Both SWAs use Azure Static Web Apps built-in authentication backed by Microsoft Entra ID (Azure Active Directory). The `staticwebapp.config.json` in each app's `public/` folder:
+- Protects all HTML navigation routes (`/*`) behind `authenticated` role
+- Explicitly allows anonymous access to static file routes (`/assets/*`, `/*.json`, `/*.ico`, etc.) so Vite's hashed bundles load before the auth session is established
+- Redirects 401s to `/.auth/login/aad?post_login_redirect_uri=/`
+
+One App Registration (`ems-handoff-app`) in Entra ID is shared by both SWAs. The `AZURE_CLIENT_ID` and `AZURE_CLIENT_SECRET` Application Settings on each SWA reference this registration. The Function App does NOT use these settings — it uses Managed Identity via `DefaultAzureCredential`.
+
+**PWA Configuration:** Both apps include `public/manifest.json` and `public/staticwebapp.config.json`. The SWA config enforces SPA routing (all paths → `index.html`), sets `X-Frame-Options: DENY`, and enforces HTTPS via `Strict-Transport-Security`.
 
 ---
 

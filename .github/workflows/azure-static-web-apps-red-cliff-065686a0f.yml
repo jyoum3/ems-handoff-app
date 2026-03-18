@@ -45,6 +45,11 @@ jobs:
           output_location: "dist" # Built app content directory - optional
           github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
+        env:
+          # Bake the absolute Function App URL into the Vite bundle at build time.
+          # Vite replaces import.meta.env.VITE_API_BASE_URL with this value.
+          # Fallback in api.ts is '/api' for local development.
+          VITE_API_BASE_URL: https://ems-handoff-api.azurewebsites.net/api
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

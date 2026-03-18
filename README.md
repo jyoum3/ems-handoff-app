@@ -236,19 +236,68 @@ npm run dev
 
 ## Deployment (Azure)
 
-Both frontends are configured for **Azure Static Web Apps** (SWA):
-- `public/staticwebapp.config.json` — SPA routing fallback, security headers, CSP
-- `public/manifest.json` — PWA manifest for installability
+### Live Demo
 
-The backend deploys as an **Azure Functions App** (Python 3.11, Consumption or Premium plan).
+| App | URL | Access |
+|-----|-----|--------|
+| **EMS Medic PWA** | `https://red-cliff-065686a0f.4.azurestaticapps.net` | Entra ID login required |
+| **Hospital Dashboard** | `https://gray-river-0aac47b0f.2.azurestaticapps.net` | Entra ID login required |
 
-For production deployments:
-- Replace all `AuthType=azure.app` (Service Principal) credentials with `AuthType=azure.msi` (Managed Identity)
-- Set Azure App Settings in the Function App portal (equivalent to `local.settings.json`)
-- Assign the Function App's Managed Identity to:
-  - Cosmos DB: `Cosmos DB Built-in Data Contributor`
-  - Blob Storage: `Storage Blob Data Contributor`
-  - SignalR: `SignalR App Server`
+Demo credentials are available on request. Both apps require a Microsoft account or a guest invitation to the project's Entra ID tenant.
+
+### Architecture
+
+Both frontends deploy to **Azure Static Web Apps (Free tier)** with built-in Entra ID authentication. The backend is a single **Azure Functions App** (Python 3.11, Consumption plan) shared by both SWAs via CORS — not the SWA "managed backend link", which restricts a Function App to one SWA.
+
+```
+Both SWAs ──(CORS, direct HTTPS)──► Azure Functions App (ems-handoff-api)
+                                              │
+                                     Managed Identity
+                                              │
+                              ┌───────────────┼──────────────┐
+                        Cosmos DB       Blob Storage    SignalR Service
+```
+
+The Function App URL is baked into the frontend bundles at build time via `VITE_API_BASE_URL`, injected by the GitHub Actions workflow `env:` block. In local development, this variable is unset and the fallback `'/api'` path routes through the Vite dev proxy to `localhost:7071`.
+
+### Backend Deployment
+
+```bash
+cd src/api
+func azure functionapp publish ems-handoff-api --python
+```
+
+### Required Azure App Settings (Function App)
+
+| Setting | Value |
+|---------|-------|
+| `COSMOS_DB_ENDPOINT` | Cosmos DB account URI |
+| `BLOB_SERVICE_ENDPOINT` | Storage account blob endpoint |
+| `ARCHIVE_CONTAINER_NAME` | `handoff-archive` |
+| `COMMENTS_CONTAINER_NAME` | `handoff-comments` |
+| `CHAT_CONTAINER_NAME` | `inbound-chat` |
+| `ECG_CONTAINER_NAME` | `ecg-uploads` |
+| `AzureSignalRConnectionString` | `Endpoint=https://[signalr].service.signalr.net;AuthType=azure.msi` |
+| `EmsDb__accountEndpoint` | Cosmos DB account URI |
+| `EmsDb__credential` | `managedidentity` |
+| `EmsDb__clientId` | Function App Managed Identity client ID |
+
+### Managed Identity RBAC
+
+The Function App's System-Assigned Managed Identity must be granted:
+- Cosmos DB: `Cosmos DB Built-in Data Contributor`
+- Blob Storage: `Storage Blob Data Contributor`
+- SignalR: `SignalR App Server`
+
+### SWA Authentication (Entra ID)
+
+Each SWA requires two Application Settings:
+- `AZURE_CLIENT_ID` — App Registration (client) ID
+- `AZURE_CLIENT_SECRET` — App Registration client secret
+
+These reference a single App Registration in Entra ID with Redirect URIs:
+- `https://red-cliff-065686a0f.4.azurestaticapps.net/.auth/login/aad/callback`
+- `https://gray-river-0aac47b0f.2.azurestaticapps.net/.auth/login/aad/callback`
 
 ---
 
