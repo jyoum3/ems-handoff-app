@@ -9,7 +9,11 @@
   "routes": [
     {
       "route": "/api/*",
-      "allowedRoles": ["anonymous", "authenticated"]
+      "allowedRoles": ["anonymous"]
+    },
+    {
+      "route": "/assets/*",
+      "allowedRoles": ["anonymous"]
     },
     {
       "route": "/",

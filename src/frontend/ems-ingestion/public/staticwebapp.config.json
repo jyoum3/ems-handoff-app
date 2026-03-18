@@ -7,8 +7,9 @@
   },
 
   "routes": [
-      { "route": "/api/*", "allowedRoles": ["anonymous"] },
-      { "route": "/*", "allowedRoles": ["authenticated"] }
+      { "route": "/api/*",    "allowedRoles": ["anonymous"] },
+      { "route": "/assets/*", "allowedRoles": ["anonymous"] },
+      { "route": "/*",        "allowedRoles": ["authenticated"] }
   ],
 
   "responseOverrides": {
