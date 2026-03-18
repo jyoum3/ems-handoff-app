@@ -63,7 +63,7 @@ bp = func.Blueprint()
 # =============================================================================
 
 
-@bp.route(route="ems-to-db", methods=["POST"])
+@bp.route(route="ems-to-db", methods=["POST"], auth_level=func.AuthLevel.ANONYMOUS)
 def ems_to_db(req: func.HttpRequest) -> func.HttpResponse:
     """
     HTTP-Triggered Azure Function: EMS Handoff Ingestion.

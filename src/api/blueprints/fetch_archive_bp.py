@@ -108,7 +108,7 @@ _HOT_TIER_HOURS: int = 24
 # =============================================================================
 
 
-@bp.route(route="fetch-archive", methods=["GET"])
+@bp.route(route="fetch-archive", methods=["GET"], auth_level=func.AuthLevel.ANONYMOUS)
 def fetch_archive(req: func.HttpRequest) -> func.HttpResponse:
     """
     HTTP-Triggered Azure Function: Archived Bundle Retrieval (Single or List).

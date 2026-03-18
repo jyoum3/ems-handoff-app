@@ -87,7 +87,7 @@ _VALID_HOSPITAL_IDS: frozenset[str] = frozenset(
 # =============================================================================
 
 
-@bp.route(route="active-handoffs", methods=["GET"])
+@bp.route(route="active-handoffs", methods=["GET"], auth_level=func.AuthLevel.ANONYMOUS)
 def active_handoffs(req: func.HttpRequest) -> func.HttpResponse:
     """
     HTTP-Triggered Azure Function: Active Handoffs Hydration Query.

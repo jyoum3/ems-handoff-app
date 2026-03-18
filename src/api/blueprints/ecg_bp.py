@@ -156,7 +156,7 @@ def _field_text(form: dict[str, dict], key: str) -> str:
 # =============================================================================
 
 
-@bp.route(route="upload-ecg", methods=["POST"])
+@bp.route(route="upload-ecg", methods=["POST"], auth_level=func.AuthLevel.ANONYMOUS)
 @bp.generic_output_binding(
     arg_name="signalr_messages",
     type="signalR",
@@ -471,7 +471,7 @@ def upload_ecg(
 # =============================================================================
 
 
-@bp.route(route="get-ecg", methods=["GET"])
+@bp.route(route="get-ecg", methods=["GET"], auth_level=func.AuthLevel.ANONYMOUS)
 def get_ecg(req: func.HttpRequest) -> func.HttpResponse:
     """
     HTTP-Triggered Azure Function: ECG Image Retrieval.
@@ -639,7 +639,7 @@ def get_ecg(req: func.HttpRequest) -> func.HttpResponse:
 # =============================================================================
 
 
-@bp.route(route="delete-ecg", methods=["DELETE"])
+@bp.route(route="delete-ecg", methods=["DELETE"], auth_level=func.AuthLevel.ANONYMOUS)
 def delete_ecg(req: func.HttpRequest) -> func.HttpResponse:
     """
     HTTP-Triggered Azure Function: ECG Record Deletion.

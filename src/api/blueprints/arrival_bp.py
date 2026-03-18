@@ -97,7 +97,7 @@ _SIGNALR_TARGET = "handoffUpdate"
 # =============================================================================
 
 
-@bp.route(route="ems-arrival", methods=["POST"])
+@bp.route(route="ems-arrival", methods=["POST"], auth_level=func.AuthLevel.ANONYMOUS)
 @bp.generic_output_binding(
     arg_name="signalr_messages",
     type="signalR",

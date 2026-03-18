@@ -76,7 +76,7 @@ _VALID_HOSPITALS = {"HUP-PAV", "HUP-PRESBY", "HUP-CEDAR"}
 # =============================================================================
 
 
-@bp.route(route="get-chat", methods=["GET"])
+@bp.route(route="get-chat", methods=["GET"], auth_level=func.AuthLevel.ANONYMOUS)
 def get_chat(req: func.HttpRequest) -> func.HttpResponse:
     """
     GET /api/get-chat?bundleId=X&hospitalId=Y
@@ -174,7 +174,7 @@ def get_chat(req: func.HttpRequest) -> func.HttpResponse:
 # =============================================================================
 
 
-@bp.route(route="send-chat", methods=["POST"])
+@bp.route(route="send-chat", methods=["POST"], auth_level=func.AuthLevel.ANONYMOUS)
 @bp.generic_output_binding(
     arg_name="signalr_messages",
     type="signalR",

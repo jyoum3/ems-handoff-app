@@ -111,7 +111,7 @@ _HUB_NAME = "EmsHandoff"
 # =============================================================================
 
 
-@bp.route(route="recover-handoff", methods=["POST"])
+@bp.route(route="recover-handoff", methods=["POST"], auth_level=func.AuthLevel.ANONYMOUS)
 @bp.generic_output_binding(
     arg_name="signalr_messages",
     type="signalR",

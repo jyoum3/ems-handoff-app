@@ -152,7 +152,7 @@ class UpdateCommentRequest(BaseModel):
 # =============================================================================
 
 
-@bp.route(route="get-comments", methods=["GET"])
+@bp.route(route="get-comments", methods=["GET"], auth_level=func.AuthLevel.ANONYMOUS)
 def get_comments(req: func.HttpRequest) -> func.HttpResponse:
     """
     GET /api/get-comments?hospitalId=X
@@ -221,7 +221,7 @@ def get_comments(req: func.HttpRequest) -> func.HttpResponse:
 # =============================================================================
 
 
-@bp.route(route="update-comment", methods=["POST"])
+@bp.route(route="update-comment", methods=["POST"], auth_level=func.AuthLevel.ANONYMOUS)
 @bp.generic_output_binding(
     arg_name="signalr_messages",
     type="signalR",

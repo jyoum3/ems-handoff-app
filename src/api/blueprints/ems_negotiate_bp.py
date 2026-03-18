@@ -82,7 +82,7 @@ _HUB_NAME = "EmsHandoff"
 # =============================================================================
 
 
-@bp.route(route="ems-negotiate", methods=["GET", "POST"])
+@bp.route(route="ems-negotiate", methods=["GET", "POST"], auth_level=func.AuthLevel.ANONYMOUS)
 @bp.generic_input_binding(
     arg_name="connection_info",
     type="signalRConnectionInfo",
