@@ -5,16 +5,16 @@
 ## Azure Service Topology
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                          Azure Subscription                                 │
-│                                                                             │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                          Azure Subscription                                │
+│                                                                            │
 │  ┌──────────────────────┐    ┌──────────────────────────────────────────┐  │
 │  │  Azure Static Web    │    │  Azure Static Web Apps                   │  │
 │  │  Apps (EMS PWA)      │    │  (Hospital Dashboard PWA)                │  │
 │  │  ems-ingestion/      │    │  hospital-dashboard/                     │  │
 │  └──────────┬───────────┘    └──────────────────────┬───────────────────┘  │
-│             │  HTTPS /api/*                          │ HTTPS /api/*         │
-│             ▼                                        │                      │
+│             │  HTTPS /api/*                          │ HTTPS /api/*        │
+│             ▼                                        │                     │
 │  ┌──────────────────────────────────────────────────▼───────────────────┐  │
 │  │                     Azure Functions App (Python 3.11)                │  │
 │  │                        src/api/function_app.py                       │  │
@@ -32,22 +32,22 @@
 │  │  chat_bp                                                             │  │
 │  │  divert_handoff_bp                                                   │  │
 │  │  ecg_bp                                                              │  │
-│  └──────┬──────────────┬─────────────────────┬────────────────┬────────┘  │
+│  └──────┬──────────────┬─────────────────────┬────────────────┬─────────┘  │
 │         │              │                     │                │            │
 │         ▼              ▼                     ▼                ▼            │
-│  ┌─────────────┐ ┌──────────────┐ ┌────────────────┐ ┌────────────────┐  │
-│  │  Azure      │ │  Azure Blob  │ │  Azure SignalR  │ │  Azure AD      │  │
-│  │  Cosmos DB  │ │  Storage     │ │  Service        │ │  (Entra ID)    │  │
-│  │  (Core API) │ │              │ │  (Serverless)   │ │                │  │
-│  │             │ │  handoff-    │ │                 │ │  Service       │  │
-│  │  handoffs   │ │  archive/    │ │  Hub: EmsHandoff│ │  Principal     │  │
-│  │  comments   │ │  ecg-uploads/│ │                 │ │  (local dev)   │  │
-│  │  inbound-   │ │              │ │  WS → Hospital  │ │                │  │
-│  │  chat       │ │              │ │  WS → EMS PWA   │ │  Managed       │  │
-│  │  leases     │ │              │ │                 │ │  Identity      │  │
-│  └─────────────┘ └──────────────┘ └────────────────┘ │  (production)  │  │
-│                                                        └────────────────┘  │
-└─────────────────────────────────────────────────────────────────────────────┘
+│  ┌─────────────┐ ┌──────────────┐ ┌────────────────┐ ┌─────────────────┐   │
+│  │  Azure      │ │  Azure Blob  │ │  Azure SignalR  │ │  Azure AD      │   │
+│  │  Cosmos DB  │ │  Storage     │ │  Service        │ │  (Entra ID)    │   │
+│  │  (Core API) │ │              │ │  (Serverless)   │ │                │   │ 
+│  │             │ │  handoff-    │ │                 │ │  Service       │   │
+│  │  handoffs   │ │  archive/    │ │  Hub: EmsHandoff│ │  Principal     │   │
+│  │  comments   │ │  ecg-uploads/│ │                 │ │  (local dev)   │   │
+│  │  inbound-   │ │              │ │  WS → Hospital  │ │                │   │
+│  │  chat       │ │              │ │  WS → EMS PWA   │ │  Managed       │   │
+│  │  leases     │ │              │ │                 │ │  Identity      │   │
+│  └─────────────┘ └──────────────┘ └─────────────────┘ │  (production)  │   │
+│                                                       └────────────────┘   │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---

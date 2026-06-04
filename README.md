@@ -96,6 +96,7 @@ This gap creates intake bottlenecks, delays resource activation (Cath Lab, LVAD 
 ems-handoff-app/
 ├── README.md                           ← This file
 ├── ARCHITECTURE.md                     ← Azure topology, data flows, design decisions
+├── ENTERPRISE_SCALE.md                 ← Prototype-to-enterprise relationship and architecture index
 ├── .gitignore                          ← Secrets, build artifacts, environment files
 ├── pyproject.toml                      ← Python project metadata + audited dependencies
 │
