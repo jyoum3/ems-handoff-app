@@ -1,11 +1,6 @@
 # Engineering Log — EMS Handoff Dashboard
 
-**Project:** Azure Serverless PHI Pipeline  
-**Engineer:** James Youm
-
-This document is a technical case study covering the key phases of this project:
-what was built, the engineering decisions behind it, and the test results that
-validated each layer.
+A phase-by-phase technical case study: what was built, the engineering decisions behind each layer, and the test results that validated them.
 
 ---
 

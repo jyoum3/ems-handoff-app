@@ -8,6 +8,30 @@ For the full Azure topology diagram, data flow sequences, and RBAC table, see
 
 ---
 
+## Environment Variables
+
+| Variable | Used By | Description |
+|----------|---------|-------------|
+| `COSMOS_DB_ENDPOINT` | `shared_clients.py` | Cosmos DB account URI |
+| `BLOB_SERVICE_ENDPOINT` | `shared_clients.py` | Blob Storage account URI |
+| `ARCHIVE_CONTAINER_NAME` | `arrival_bp`, `recover_handoff_bp`, `fetch_archive_bp` | Blob container for PHI archive |
+| `COMMENTS_CONTAINER_NAME` | `shared_clients.py` | Cosmos container for staff comments |
+| `CHAT_CONTAINER_NAME` | `shared_clients.py` | Cosmos container for EMS ↔ Hospital chat |
+| `ECG_CONTAINER_NAME` | `shared_clients.py` | Blob container for ECG images (default: `ecg-uploads`) |
+| `AzureSignalRConnectionString` | All SignalR output bindings + negotiate bindings | SignalR Service connection (SP format for local, MSI for Azure) |
+| `EmsDb__accountEndpoint` | `streaming_bp.py` (Change Feed trigger) | Cosmos account URI for Change Feed auth prefix |
+| `EmsDb__credential` | `streaming_bp.py` | `"clientsecret"` for SP-based local dev |
+| `EmsDb__clientId` | `streaming_bp.py` | Service Principal client ID |
+| `EmsDb__clientSecret` | `streaming_bp.py` | Service Principal client secret |
+| `EmsDb__tenantId` | `streaming_bp.py` | Azure AD tenant ID |
+| `AZURE_CLIENT_ID` | `DefaultAzureCredential` | Service Principal client ID |
+| `AZURE_CLIENT_SECRET` | `DefaultAzureCredential` | Service Principal client secret |
+| `AZURE_TENANT_ID` | `DefaultAzureCredential` | Azure AD tenant ID |
+
+Set all variables in `local.settings.json` for local development and in Azure App Settings for production. `local.settings.json` is gitignored and must never be committed.
+
+---
+
 ## Azure Services Used
 
 | Service | Tier / Config | Why This Service |

@@ -5,6 +5,17 @@
 
 ---
 
+## Live Demo
+
+| App | URL |
+|-----|-----|
+| **EMS Medic PWA** | https://red-cliff-065686a0f.4.azurestaticapps.net |
+| **Hospital Dashboard** | https://gray-river-0aac47b0f.2.azurestaticapps.net |
+
+Both apps require Entra ID login. Demo credentials are available on request — contact [jamesyoum.jy@gmail.com](mailto:jamesyoum.jy@gmail.com).
+
+---
+
 ## The Problem
 
 Emergency Medical Services (EMS) crews routinely transport critically ill patients to receiving Emergency Departments with no structured, real-time channel to communicate patient data ahead of arrival. The handoff happens verbally — at the bedside, under pressure — after the patient is already in the department. ED staff have no advance visibility into ESI triage level, vital signs, administered interventions, or required resources until the gurney rolls through the door.
@@ -318,5 +329,5 @@ These reference a single App Registration in Entra ID with Redirect URIs:
 
 ## Author
 
-**James Youm** — Cloud Computing Senior  
+**James Youm** — Cloud Computing Graduate (WGU, B.S., 2026)  
 Portfolio project demonstrating Azure serverless architecture, HIPAA-aware data design, real-time streaming, and React/TypeScript PWA development.
